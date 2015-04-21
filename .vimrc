@@ -12,19 +12,18 @@ Plugin 'tpope/vim-rails'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'kien/ctrlp.vim'
-Plugin 'ap/vim-buftabline'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'vim-scripts/dbext.vim'
-
-"colors
-Plugin 'sickill/vim-monokai'
+Plugin 'bling/vim-airline'
+Plugin 'Valloric/YouCompleteMe'
 
 call vundle#end()
 
 filetype plugin indent on
 set number
+set t_Co=256
 set background=dark
-colorscheme monokai
+colorscheme default
 syntax enable
 set mouse=a
 
@@ -45,9 +44,9 @@ nnoremap <C-h> :bprev<CR>
 
 
 "syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
@@ -61,5 +60,8 @@ autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
-"auto save
-let g:auto_save = 1
+"airline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_left_sep=''
+let g:airline_right_sep=''
+let g:airline_theme='sol'
