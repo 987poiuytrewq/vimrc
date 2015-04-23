@@ -29,6 +29,7 @@ set mouse=a
 
 "autosave
 au CursorHold,InsertLeave * nested update
+set noswapfile
 
 "indent
 set tabstop=2
