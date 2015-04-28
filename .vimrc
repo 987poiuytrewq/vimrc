@@ -16,14 +16,19 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'vim-scripts/dbext.vim'
 Plugin 'bling/vim-airline'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'moll/vim-bbye'
+Plugin 'ekalinin/Dockerfile.vim'
+
+Plugin 'qualiabyte/vim-colorstepper'
+Plugin 'flazz/vim-colorschemes'
 
 call vundle#end()
 
 filetype plugin indent on
-set number
+set relativenumber
 set t_Co=256
 set background=dark
-colorscheme default
+colorscheme default 
 syntax enable
 set mouse=a
 
@@ -40,14 +45,14 @@ set copyindent
 
 "tabbing
 set hidden
-nnoremap <C-l> :bnext<CR>
-nnoremap <C-h> :bprev<CR>
+nnoremap <C-right> :bnext<CR>
+nnoremap <C-left> :bprev<CR>
+nnoremap <C-down> :Bdelete<CR>
+nnoremap <C-up> <C-p>
 
-
-"syntastic
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
+"move lines
+nnoremap <A-j> :m .+1<CR>== 
+nnoremap <A-k> :m .-2<CR>== 
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
@@ -65,4 +70,4 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_left_sep=''
 let g:airline_right_sep=''
-let g:airline_theme='sol'
+"let g:airline_theme='sol'
