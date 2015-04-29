@@ -5,22 +5,36 @@ set nocompatible
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-
 Plugin 'gmarik/Vundle.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-rails'
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
-Plugin 'kien/ctrlp.vim'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'vim-scripts/dbext.vim'
-Plugin 'bling/vim-airline'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'moll/vim-bbye'
-Plugin 'ekalinin/Dockerfile.vim'
 
-Plugin 'qualiabyte/vim-colorstepper'
-Plugin 'flazz/vim-colorschemes'
+"git
+Plugin 'tpope/vim-fugitive'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'gregsexton/gitv'
+
+"nav
+Plugin 'kien/ctrlp.vim'
+Plugin 'tpope/vim-vinegar'
+Plugin 'tpope/vim-rails'
+Plugin 'tpope/vim-eunuch'
+Plugin 'vim-scripts/dbext.vim'
+Plugin 'moll/vim-bbye'
+
+"edit
+Plugin 'tpope/vim-commentary'
+Plugin 'Valloric/YouCompleteMe'
+
+"interface
+Plugin 'scrooloose/syntastic'
+Plugin 'bling/vim-airline'
+
+"tags
+Plugin 'majutsushi/tagbar'
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-easytags'
+
+"file types
+Plugin 'ekalinin/Dockerfile.vim'
 
 call vundle#end()
 
@@ -36,6 +50,9 @@ set mouse=a
 au CursorHold,InsertLeave * nested update
 set noswapfile
 
+"highlight
+set hlsearch
+
 "indent
 set tabstop=2
 set shiftwidth=2
@@ -43,31 +60,32 @@ set expandtab
 set autoindent
 set copyindent
 
-"tabbing
+"buffers
 set hidden
 nnoremap <C-right> :bnext<CR>
 nnoremap <C-left> :bprev<CR>
 nnoremap <C-down> :Bdelete<CR>
-nnoremap <C-up> <C-p>
 
 "move lines
 nnoremap <A-j> :m .+1<CR>== 
 nnoremap <A-k> :m .-2<CR>== 
 
+"syntastic
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-
 let g:syntastic_javascript_checkers = ['eslint']
-
-"NERDTree
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 "airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_left_sep=''
 let g:airline_right_sep=''
-"let g:airline_theme='sol'
+
+"ctrl p
+let g:ctrlp_clear_cache_on_exit=0
+let g:ctrlp_show_hidden=1
+let g:ctrlp_extensions=['tag']
+
+"tagbar
+nmap <F8> :TagbarToggle<CR>
