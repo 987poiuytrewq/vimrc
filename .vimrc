@@ -36,13 +36,20 @@ Plugin 'xolox/vim-easytags'
 "file types
 Plugin 'ekalinin/Dockerfile.vim'
 
+"colors
+Plugin 'vim-scripts/CSApprox'
+Plugin 'romainl/flattened' 
+
+"characters
+Plugin 'Yggdroot/indentLine'
+
 call vundle#end()
 
 filetype plugin indent on
 set relativenumber
 set t_Co=256
 set background=dark
-colorscheme default 
+colorscheme flattened_dark 
 syntax enable
 set mouse=a
 
@@ -81,6 +88,7 @@ let g:syntastic_javascript_checkers = ['eslint']
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_left_sep=''
 let g:airline_right_sep=''
+set laststatus=2
 
 "ctrl p
 let g:ctrlp_clear_cache_on_exit=0
@@ -89,3 +97,7 @@ let g:ctrlp_extensions=['tag']
 
 "tagbar
 nmap <F8> :TagbarToggle<CR>
+
+"indentline
+let g:indentLine_char = '︙'
+let g:indentLine_color_dark = 1
