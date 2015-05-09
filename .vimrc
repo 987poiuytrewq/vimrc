@@ -40,8 +40,8 @@ Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'vim-scripts/CSApprox'
 Plugin 'romainl/flattened' 
 
-"characters
-Plugin 'Yggdroot/indentLine'
+"display
+Plugin 'nathanaelkane/vim-indent-guides'
 
 call vundle#end()
 
@@ -52,6 +52,11 @@ set background=dark
 colorscheme flattened_dark 
 syntax enable
 set mouse=a
+set clipboard=unnamed,unnamedplus
+set viewoptions=folds,options,cursor,unix,slash
+set virtualedit=onemore
+set backup
+
 
 "autosave
 au CursorHold,InsertLeave * nested update
@@ -63,6 +68,7 @@ set hlsearch
 "indent
 set tabstop=2
 set shiftwidth=2
+
 set expandtab
 set autoindent
 set copyindent
@@ -98,6 +104,15 @@ let g:ctrlp_extensions=['tag']
 "tagbar
 nmap <F8> :TagbarToggle<CR>
 
-"indentline
-let g:indentLine_char = '︙'
-let g:indentLine_color_dark = 1
+"indent guides
+let g:indent_guides_start_level = 1
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_auto_colors = 0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=bg
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=235
+
+"youcompleteme
+let g:ycm_collect_identifiers_from_tags_files = 1
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
