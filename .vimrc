@@ -39,6 +39,7 @@ Plugin 'ekalinin/Dockerfile.vim'
 "colors
 Plugin 'vim-scripts/CSApprox'
 Plugin 'romainl/flattened' 
+Plugin 'morhetz/gruvbox'
 
 "display
 Plugin 'nathanaelkane/vim-indent-guides'
@@ -47,9 +48,6 @@ call vundle#end()
 
 filetype plugin indent on
 set relativenumber
-set t_Co=256
-set background=dark
-colorscheme flattened_dark 
 syntax enable
 set mouse=a
 set clipboard=unnamed,unnamedplus
@@ -57,18 +55,21 @@ set viewoptions=folds,options,cursor,unix,slash
 set virtualedit=onemore
 set backup
 
+"colors
+set t_Co=256
+set background=dark
+colorscheme gruvbox
+hi Normal ctermbg=none
+hi NonText ctermbg=none
+set hlsearch
 
 "autosave
 au CursorHold,InsertLeave * nested update
 set noswapfile
 
-"highlight
-set hlsearch
-
 "indent
 set tabstop=2
 set shiftwidth=2
-
 set expandtab
 set autoindent
 set copyindent
@@ -108,8 +109,8 @@ nmap <F8> :TagbarToggle<CR>
 let g:indent_guides_start_level = 1
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_auto_colors = 0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=bg
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=235
+hi IndentGuidesOdd ctermbg=none
+hi IndentGuidesEven ctermbg=235
 
 "youcompleteme
 let g:ycm_collect_identifiers_from_tags_files = 1
