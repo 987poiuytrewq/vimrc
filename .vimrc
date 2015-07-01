@@ -13,12 +13,17 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'gregsexton/gitv'
 
 "nav
-Plugin 'kien/ctrlp.vim'
 Plugin 'tpope/vim-eunuch'
-Plugin 'vim-scripts/dbext.vim'
 Plugin 'moll/vim-bbye'
-Plugin 'vim-scripts/ag.vim'
-Plugin 'octref/RootIgnore'
+Plugin 'vim-scripts/gitignore'
+Plugin 'euclio/gitignore.vim'
+
+"unite
+Plugin 'Shougo/unite.vim'
+Plugin 'Shougo/vimproc.vim'
+Plugin 'Shougo/unite-outline'
+Plugin 'tsukkee/unite-tag'
+Plugin 'lambdalisue/unite-grep-vcs'
 
 "edit
 Plugin 'tpope/vim-commentary'
@@ -61,8 +66,9 @@ set mouse=a
 set clipboard=unnamed,unnamedplus
 set viewoptions=folds,options,cursor,unix,slash
 set virtualedit=onemore
-set nobackup
-set nowritebackup
+
+"leader
+let mapleader = "\<Space>"
 
 "colors
 set t_Co=256
@@ -74,9 +80,13 @@ highlight SpellBad ctermbg=none
 highlight SpellCap ctermbg=none
 set hlsearch
 
-"autosave
-autocmd CursorHold * nested update
+"saving
+nnoremap <leader>w :w<CR>
+set nobackup
+set nowritebackup
 set noswapfile
+autocmd CursorHold * nested update
+autocmd BufWritePre * :%s/\s\+$//e
 
 "indent
 set tabstop=2
@@ -89,13 +99,9 @@ set nofoldenable
 
 "buffers
 set hidden
-nnoremap <C-right> :bnext<CR>
-nnoremap <C-left> :bprev<CR>
-nnoremap <C-down> :Bdelete<CR>
-
-"move lines
-nnoremap <A-j> :m .+1<CR>== 
-nnoremap <A-k> :m .-2<CR>== 
+nnoremap <leader>l :bnext<CR>
+nnoremap <leader>h :bprev<CR>
+nnoremap <leader>j :Bdelete<CR>
 
 "syntastic
 let g:syntastic_always_populate_loc_list = 1
@@ -111,17 +117,16 @@ let g:airline_left_sep=''
 let g:airline_right_sep=''
 set laststatus=2
 
-"ctrl p
-let g:ctrlp_clear_cache_on_exit=0
-let g:ctrlp_show_hidden=1
-let g:ctrlp_extensions=['tag']
-
-"RootIgnore
-let g:ctrlp_working_path_mode = '0'
-
-
-"tagbar
-nmap <F8> :TagbarToggle<CR>
+"unite
+let g:unite_source_history_yank_enable = 1
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+nnoremap <leader>d :Unite -no-split -buffer-name=directories -start-insert file/async<CR>
+nnoremap <leader>f :Unite -no-split -buffer-name=files -start-insert file_rec/async<CR>
+nnoremap <leader>r :Unite -no-split -buffer-name=recent -start-insert file_mru<CR>
+nnoremap <leader>t :Unite -no-split -buffer-name=tags -start-insert tag<CR>
+nnoremap <leader>g :Unite -no-split -buffer-name=tags -start-insert grep/git<CR>
+nnoremap <leader>o :Unite -buffer-name=outline -start-insert outline<CR>
+nnoremap <leader>y :Unite -buffer-name=yank history/yank<CR>
 
 "indent guides
 let g:indent_guides_start_level = 1
