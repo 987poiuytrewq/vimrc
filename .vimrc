@@ -100,9 +100,9 @@ set nofoldenable
 
 "buffers
 set hidden
-nnoremap <leader>l :bnext<CR>
-nnoremap <leader>h :bprev<CR>
-nnoremap <leader>j :Bdelete<CR>
+nnoremap <C-l> :bnext<CR>
+nnoremap <C-h> :bprev<CR>
+nnoremap <C-j> :Bdelete<CR>
 
 "syntastic
 let g:syntastic_always_populate_loc_list = 1
@@ -120,14 +120,17 @@ set laststatus=2
 
 "unite
 let g:unite_source_history_yank_enable = 1
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-nnoremap <leader>d :Unite -no-split -buffer-name=directories -start-insert file/async<CR>
-nnoremap <leader>f :Unite -no-split -buffer-name=files -start-insert file_rec/git<CR>
-nnoremap <leader>r :Unite -no-split -buffer-name=recent -start-insert file_mru<CR>
-nnoremap <leader>t :Unite -no-split -buffer-name=tags -start-insert tag<CR>
-nnoremap <leader>g :Unite -no-split -buffer-name=grep -start-insert grep/git<CR>
-nnoremap <leader>o :Unite -buffer-name=outline -start-insert outline<CR>
-nnoremap <leader>y :Unite -buffer-name=yank history/yank<CR>
+call unite#filters#sorter_default#use(['sorter_selecta'])
+call unite#filters#matcher_default#use(['converter_relative_abbr', 'matcher_fuzzy', 'matcher_project_ignore_file'])
+call unite#custom_source('file/async,narrow', 'converters', ['converter_tail_abbr'])
+nnoremap <leader>d :<C-u>Unite -no-split -smartcase -buffer-name=directories -start-insert file/async<CR>
+nnoremap <leader>f :<C-u>Unite -no-split -smartcase -buffer-name=files -start-insert file_rec/git<CR>
+nnoremap <leader>r :<C-u>Unite -no-split -smartcase -buffer-name=recent -start-insert file_mru<CR>
+nnoremap <leader>t :<C-u>Unite -no-split -smartcase -buffer-name=tags -start-insert tag<CR>
+nnoremap <leader>g :<C-u>Unite -no-split -smartcase -buffer-name=grep -start-insert grep/git<CR>
+nnoremap <leader>o :<C-u>Unite -smartcase -buffer-name=outline outline<CR>
+nnoremap <leader>y :<C-u>Unite -smartcase -buffer-name=yank history/yank<CR>
+nnoremap <leader>m :<C-u>Unite -smartcase -buffer-name=menu menu<CR>
 
 "indent guides
 let g:indent_guides_start_level = 1
@@ -137,10 +140,9 @@ highlight IndentGuidesOdd ctermbg=none
 highlight IndentGuidesEven ctermbg=235
 
 "youcompleteme
-let g:monster#completion#rcodetools#backend = 'async_rct_complete'
 let g:ycm_collect_identifiers_from_tags_files = 1
-" set omnifunc=syntaxcomplete#Complete
-" autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-" autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-" autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType eruby setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
