@@ -15,15 +15,16 @@ Plugin 'gregsexton/gitv'
 "nav
 Plugin 'tpope/vim-eunuch'
 Plugin 'moll/vim-bbye'
-Plugin 'vim-scripts/gitignore'
-Plugin 'euclio/gitignore.vim'
 
 "unite
 Plugin 'Shougo/unite.vim'
-Plugin 'Shougo/vimproc.vim'
 Plugin 'Shougo/unite-outline'
 Plugin 'tsukkee/unite-tag'
 Plugin 'lambdalisue/unite-grep-vcs'
+
+"utils
+Plugin 'tpope/vim-dispatch'
+Plugin 'Shougo/vimproc.vim'
 
 "edit
 Plugin 'tpope/vim-commentary'
@@ -33,11 +34,6 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/syntastic'
 Plugin 'bling/vim-airline'
 
-"tags
-Plugin 'majutsushi/tagbar'
-Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-easytags'
-
 "file types
 Plugin 'ekalinin/Dockerfile.vim'
 
@@ -46,16 +42,12 @@ Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-endwise'
 "Plugin 'astahov/vim-ruby-debugger'
-Plugin 'osyo-manga/vim-monster'
 
 "colors
 Plugin 'vim-scripts/CSApprox'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'romainl/flattened'
 Plugin 'lilydjwg/colorizer'
-
-"display
-Plugin 'nathanaelkane/vim-indent-guides'
 
 call vundle#end()
 
@@ -82,12 +74,19 @@ highlight SpellCap ctermbg=none
 set hlsearch
 
 "saving
+fun! StripTrailingWhitespace()
+  let l = line(".")
+  let c = col(".")
+  %s/\s\+$//e
+  call cursor(l, c)
+endfun
+
 nnoremap <leader>w :w<CR>
 set nobackup
 set nowritebackup
 set noswapfile
-autocmd CursorHold * nested update
-autocmd BufWritePre * :%s/\s\+$//e
+autocmd TextChanged,InsertLeave * update
+autocmd BufWritePre * :call StripTrailingWhitespace()
 
 "indent
 set tabstop=2
@@ -98,11 +97,13 @@ set copyindent
 set foldmethod=indent
 set nofoldenable
 
-"buffers
+"buffer / window navigation
 set hidden
-nnoremap <C-l> :bnext<CR>
-nnoremap <C-h> :bprev<CR>
-nnoremap <C-j> :Bdelete<CR>
+nnoremap <leader>l :bnext<CR>
+nnoremap <leader>h :bprev<CR>
+nnoremap <leader>q :Bdelete<CR>
+nnoremap <leader>k <C-u>
+nnoremap <leader>j <C-d>
 
 "syntastic
 let g:syntastic_always_populate_loc_list = 1
@@ -111,9 +112,13 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_javascript_checkers = ['jsxhint']
 let g:syntastic_css_checkers = ['csslint']
+let g:syntastic_sass_checkers = ['sass']
 
 "airline
 let g:airline#extensions#tabline#enabled = 1
+let g:airline_section_x = ''
+let g:airline_section_y = ''
+let g:airline_section_z = ''
 let g:airline_left_sep=''
 let g:airline_right_sep=''
 set laststatus=2
@@ -121,28 +126,25 @@ set laststatus=2
 "unite
 let g:unite_source_history_yank_enable = 1
 call unite#filters#sorter_default#use(['sorter_selecta'])
-call unite#filters#matcher_default#use(['converter_relative_abbr', 'matcher_fuzzy', 'matcher_project_ignore_file'])
-call unite#custom_source('file/async,narrow', 'converters', ['converter_tail_abbr'])
-nnoremap <leader>d :<C-u>Unite -no-split -smartcase -buffer-name=directories -start-insert file/async<CR>
+call unite#filters#matcher_default#use(['matcher_fuzzy', 'matcher_project_ignore_file'])
+call unite#custom#source('file_rec/async,file_rec/git', 'converters', ['converter_relative_abbr'])
+call unite#custom#source('file,file/async', 'converters', ['converter_tail_abbr'])
+nnoremap <leader>d :<C-u>Unite -no-split -smartcase -no-hide-icon -buffer-name=directories -start-insert file/async<CR>
 nnoremap <leader>f :<C-u>Unite -no-split -smartcase -buffer-name=files -start-insert file_rec/git<CR>
+nnoremap <leader>a :<C-u>Unite -no-split -smartcase -buffer-name=files -start-insert file_rec/async<CR>
 nnoremap <leader>r :<C-u>Unite -no-split -smartcase -buffer-name=recent -start-insert file_mru<CR>
 nnoremap <leader>t :<C-u>Unite -no-split -smartcase -buffer-name=tags -start-insert tag<CR>
 nnoremap <leader>g :<C-u>Unite -no-split -smartcase -buffer-name=grep -start-insert grep/git<CR>
 nnoremap <leader>o :<C-u>Unite -smartcase -buffer-name=outline outline<CR>
 nnoremap <leader>y :<C-u>Unite -smartcase -buffer-name=yank history/yank<CR>
-nnoremap <leader>m :<C-u>Unite -smartcase -buffer-name=menu menu<CR>
-
-"indent guides
-let g:indent_guides_start_level = 1
-let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_auto_colors = 0
-highlight IndentGuidesOdd ctermbg=none
-highlight IndentGuidesEven ctermbg=235
 
 "youcompleteme
 let g:ycm_collect_identifiers_from_tags_files = 1
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType eruby setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown set omnifunc=htmlcomplete#CompleteTags
+autocmd FileType eruby set omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType ruby set omnifunc=rubycomplete#Complete
+autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
+autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
