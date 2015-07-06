@@ -19,6 +19,7 @@ Plugin 'moll/vim-bbye'
 "unite
 Plugin 'Shougo/unite.vim'
 Plugin 'Shougo/unite-outline'
+Plugin 'Shougo/neomru.vim'
 Plugin 'tsukkee/unite-tag'
 Plugin 'lambdalisue/unite-grep-vcs'
 
@@ -80,7 +81,6 @@ fun! StripTrailingWhitespace()
   %s/\s\+$//e
   call cursor(l, c)
 endfun
-
 nnoremap <leader>w :w<CR>
 set nobackup
 set nowritebackup
@@ -131,7 +131,6 @@ call unite#custom#source('file_rec/async,file_rec/git', 'converters', ['converte
 call unite#custom#source('file,file/async', 'converters', ['converter_tail_abbr'])
 nnoremap <leader>d :<C-u>Unite -no-split -smartcase -no-hide-icon -buffer-name=directories -start-insert file/async<CR>
 nnoremap <leader>f :<C-u>Unite -no-split -smartcase -buffer-name=files -start-insert file_rec/git<CR>
-nnoremap <leader>a :<C-u>Unite -no-split -smartcase -buffer-name=files -start-insert file_rec/async<CR>
 nnoremap <leader>r :<C-u>Unite -no-split -smartcase -buffer-name=recent -start-insert file_mru<CR>
 nnoremap <leader>t :<C-u>Unite -no-split -smartcase -buffer-name=tags -start-insert tag<CR>
 nnoremap <leader>g :<C-u>Unite -no-split -smartcase -buffer-name=grep -start-insert grep/git<CR>
