@@ -26,6 +26,7 @@ Plugin 'lambdalisue/unite-grep-vcs'
 "utils
 Plugin 'tpope/vim-dispatch'
 Plugin 'Shougo/vimproc.vim'
+Plugin 'szw/vim-tags'
 
 "edit
 Plugin 'tpope/vim-commentary'
@@ -139,6 +140,7 @@ nnoremap <leader>y :<C-u>Unite -smartcase -buffer-name=yank history/yank<CR>
 
 "youcompleteme
 let g:ycm_collect_identifiers_from_tags_files = 1
+let g:vim_tags_use_vim_dispatch = 1
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType eruby set omnifunc=htmlcomplete#CompleteTags
