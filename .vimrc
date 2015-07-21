@@ -15,6 +15,9 @@ Plugin 'gregsexton/gitv'
 "nav
 Plugin 'tpope/vim-eunuch'
 Plugin 'moll/vim-bbye'
+Plugin 'wting/gitsessions.vim'
+Plugin 'bkad/CamelCaseMotion'
+Plugin 'vimtaku/hl_matchit.vim'
 
 "unite
 Plugin 'Shougo/unite.vim'
@@ -25,7 +28,7 @@ Plugin 'lambdalisue/unite-grep-vcs'
 
 "utils
 Plugin 'tpope/vim-dispatch'
-Plugin 'Shougo/vimproc.vim'
+Plugin 'Shougo/vimproc'
 Plugin 'szw/vim-tags'
 
 "edit
@@ -43,13 +46,12 @@ Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-endwise'
-"Plugin 'astahov/vim-ruby-debugger'
+" Plugin 'astahov/vim-ruby-debugger'
 
 "colors
 Plugin 'vim-scripts/CSApprox'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'romainl/flattened'
-Plugin 'lilydjwg/colorizer'
 
 call vundle#end()
 
@@ -74,6 +76,7 @@ highlight NonText ctermbg=none
 highlight SpellBad ctermbg=none
 highlight SpellCap ctermbg=none
 set hlsearch
+set showcmd
 
 "saving
 fun! StripTrailingWhitespace()
@@ -82,6 +85,7 @@ fun! StripTrailingWhitespace()
   %s/\s\+$//e
   call cursor(l, c)
 endfun
+
 nnoremap <leader>w :w<CR>
 set nobackup
 set nowritebackup
@@ -106,17 +110,22 @@ nnoremap <leader>q :Bdelete<CR>
 nnoremap <leader>k <C-u>
 nnoremap <leader>j <C-d>
 
+"git gutter
+let g:gitgutter_realtime = 1
+
 "syntastic
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
+let g:syntastic_cursor_columns = 0
+let g:syntastic_quiet_messages = { "level": "warnings", "type": "style" }
 let g:syntastic_javascript_checkers = ['jsxhint']
 let g:syntastic_css_checkers = ['csslint']
 let g:syntastic_sass_checkers = ['sass']
 
 "airline
-let g:airline#extensions#tabline#enabled = 1
+let g:airline_extensions = ['tabline', 'branch', 'unite', 'syntastic']
 let g:airline_section_x = ''
 let g:airline_section_y = ''
 let g:airline_section_z = ''
@@ -126,17 +135,18 @@ set laststatus=2
 
 "unite
 let g:unite_source_history_yank_enable = 1
-call unite#filters#sorter_default#use(['sorter_selecta'])
-call unite#filters#matcher_default#use(['matcher_fuzzy', 'matcher_project_ignore_file'])
-call unite#custom#source('file_rec/async,file_rec/git', 'converters', ['converter_relative_abbr'])
-call unite#custom#source('file,file/async', 'converters', ['converter_tail_abbr'])
-nnoremap <leader>d :<C-u>Unite -no-split -smartcase -no-hide-icon -buffer-name=directories -start-insert file/async<CR>
-nnoremap <leader>f :<C-u>Unite -no-split -smartcase -buffer-name=files -start-insert file_rec/git<CR>
+nnoremap <leader>d :<C-u>Unite -no-split -smartcase -buffer-name=directories -start-insert file/async<CR>
+nnoremap <leader>f :<C-u>Unite -no-split -smartcase -buffer-name=files -start-insert file_rec/git:--cached:--others:--exclude-standard<CR>
 nnoremap <leader>r :<C-u>Unite -no-split -smartcase -buffer-name=recent -start-insert file_mru<CR>
 nnoremap <leader>t :<C-u>Unite -no-split -smartcase -buffer-name=tags -start-insert tag<CR>
-nnoremap <leader>g :<C-u>Unite -no-split -smartcase -buffer-name=grep -start-insert grep/git<CR>
-nnoremap <leader>o :<C-u>Unite -smartcase -buffer-name=outline outline<CR>
-nnoremap <leader>y :<C-u>Unite -smartcase -buffer-name=yank history/yank<CR>
+nnoremap <leader>g :<C-u>Unite -no-split -smartcase -buffer-name=grep grep/git<CR>
+nnoremap <leader>o :<C-u>Unite -no-split -smartcase -buffer-name=outline outline<CR>
+nnoremap <leader>y :<C-u>Unite -no-split -smartcase -buffer-name=yank history/yank<CR>
+call unite#custom#source('file_mru', 'matchers', ['matcher_project_files', 'matcher_fuzzy'])
+call unite#custom#source('file,file/async', 'converters', ['converter_tail_abbr'])
+call unite#custom#source('file_rec/git', 'converters', ['converter_relative_abbr'])
+call unite#custom#source('file,file/async,file_rec/git', 'matchers', ['matcher_fuzzy'])
+call unite#custom#source('file,file/async,file_rec/git', 'sorters', ['sorter_selecta'])
 
 "youcompleteme
 let g:ycm_collect_identifiers_from_tags_files = 1
