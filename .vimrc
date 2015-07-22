@@ -18,6 +18,7 @@ Plugin 'moll/vim-bbye'
 Plugin 'wting/gitsessions.vim'
 Plugin 'bkad/CamelCaseMotion'
 Plugin 'vimtaku/hl_matchit.vim'
+Plugin 'tpope/vim-surround'
 
 "unite
 Plugin 'Shougo/unite.vim'
@@ -46,6 +47,8 @@ Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-endwise'
+Plugin 'kana/vim-textobj-user'
+Plugin 'nelstrom/vim-textobj-rubyblock'
 " Plugin 'astahov/vim-ruby-debugger'
 
 "colors
@@ -92,6 +95,7 @@ set nowritebackup
 set noswapfile
 autocmd TextChanged,InsertLeave * update
 autocmd BufWritePre * :call StripTrailingWhitespace()
+runtime macros/matchit.vim
 
 "indent
 set tabstop=2
@@ -112,6 +116,9 @@ nnoremap <leader>j <C-d>
 
 "git gutter
 let g:gitgutter_realtime = 1
+
+"hl_matchit
+let g:hl_matchit_enable_on_vim_startup = 1
 
 "syntastic
 let g:syntastic_always_populate_loc_list = 1
