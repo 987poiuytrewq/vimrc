@@ -1,5 +1,6 @@
 set shell=bash
 
+
 "vundle
 set nocompatible
 filetype off
@@ -15,7 +16,7 @@ Plugin 'gregsexton/gitv'
 "nav
 Plugin 'tpope/vim-eunuch'
 Plugin 'moll/vim-bbye'
-Plugin 'wting/gitsessions.vim'
+" Plugin 'wting/gitsessions.vim'
 Plugin 'bkad/CamelCaseMotion'
 Plugin 'vimtaku/hl_matchit.vim'
 Plugin 'tpope/vim-surround'
@@ -26,6 +27,8 @@ Plugin 'Shougo/unite-outline'
 Plugin 'Shougo/neomru.vim'
 Plugin 'tsukkee/unite-tag'
 Plugin 'lambdalisue/unite-grep-vcs'
+Plugin 'sgur/unite-qf'
+Plugin 'Shougo/vimfiler.vim'
 
 "utils
 Plugin 'tpope/vim-dispatch'
@@ -49,7 +52,7 @@ Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-endwise'
 Plugin 'kana/vim-textobj-user'
 Plugin 'nelstrom/vim-textobj-rubyblock'
-" Plugin 'astahov/vim-ruby-debugger'
+" Plugin 'astashov/vim-ruby-debugger'
 
 "colors
 Plugin 'vim-scripts/CSApprox'
@@ -89,11 +92,10 @@ fun! StripTrailingWhitespace()
   call cursor(l, c)
 endfun
 
-nnoremap <leader>w :w<CR>
 set nobackup
 set nowritebackup
 set noswapfile
-autocmd TextChanged,InsertLeave * update
+autocmd TextChanged,InsertLeave * nested update
 autocmd BufWritePre * :call StripTrailingWhitespace()
 runtime macros/matchit.vim
 
@@ -113,18 +115,22 @@ nnoremap <leader>h :bprev<CR>
 nnoremap <leader>q :Bdelete<CR>
 nnoremap <leader>k <C-u>
 nnoremap <leader>j <C-d>
+nnoremap <leader>w <C-w>w
+nnoremap <leader>r :redraw!<CR>
 
 "git gutter
 let g:gitgutter_realtime = 1
+let g:vim_tags_gems_tags_command = ""
 
-"hl_matchit
-let g:hl_matchit_enable_on_vim_startup = 1
+"vim-tags
+let g:vim_tags_auto_generate = 1
+unlet g:vim_tags_gems_tags_command
 
 "syntastic
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 1
 let g:syntastic_cursor_columns = 0
 let g:syntastic_quiet_messages = { "level": "warnings", "type": "style" }
 let g:syntastic_javascript_checkers = ['jsxhint']
@@ -136,24 +142,29 @@ let g:airline_extensions = ['tabline', 'branch', 'unite', 'syntastic']
 let g:airline_section_x = ''
 let g:airline_section_y = ''
 let g:airline_section_z = ''
-let g:airline_left_sep=''
-let g:airline_right_sep=''
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
 set laststatus=2
 
 "unite
 let g:unite_source_history_yank_enable = 1
-nnoremap <leader>d :<C-u>Unite -no-split -smartcase -buffer-name=directories -start-insert file/async<CR>
-nnoremap <leader>f :<C-u>Unite -no-split -smartcase -buffer-name=files -start-insert file_rec/git:--cached:--others:--exclude-standard<CR>
-nnoremap <leader>r :<C-u>Unite -no-split -smartcase -buffer-name=recent -start-insert file_mru<CR>
-nnoremap <leader>t :<C-u>Unite -no-split -smartcase -buffer-name=tags -start-insert tag<CR>
-nnoremap <leader>g :<C-u>Unite -no-split -smartcase -buffer-name=grep grep/git<CR>
-nnoremap <leader>o :<C-u>Unite -no-split -smartcase -buffer-name=outline outline<CR>
-nnoremap <leader>y :<C-u>Unite -no-split -smartcase -buffer-name=yank history/yank<CR>
+let g:unite_source_tag_show_location = 0
+let g:unite_source_tag_max_name_length = 100
+let g:unite_source_tag_max_fname_length = 100
 call unite#custom#source('file_mru', 'matchers', ['matcher_project_files', 'matcher_fuzzy'])
 call unite#custom#source('file,file/async', 'converters', ['converter_tail_abbr'])
 call unite#custom#source('file_rec/git', 'converters', ['converter_relative_abbr'])
 call unite#custom#source('file,file/async,file_rec/git', 'matchers', ['matcher_fuzzy'])
-call unite#custom#source('file,file/async,file_rec/git', 'sorters', ['sorter_selecta'])
+call unite#custom#source('file,file/async,file_rec/git,buffer', 'sorters', ['sorter_selecta'])
+nnoremap <leader>d :<C-u>Unite -no-split -smartcase -buffer-name=directories -start-insert file/async<CR>
+nnoremap <leader>f :<C-u>Unite -no-split -smartcase -buffer-name=files -start-insert file_rec/git:--cached:--others:--exclude-standard<CR>
+nnoremap <leader>r :<C-u>Unite -no-split -smartcase -buffer-name=recent -start-insert file_mru<CR>
+nnoremap <leader>t :<C-u>UniteWithInput -no-split -smartcase -buffer-name=tags tag<CR>
+nnoremap <leader>g :<C-u>Unite -no-split -smartcase -buffer-name=grep grep/git<CR>
+nnoremap <leader>o :<C-u>Unite -no-split -smartcase -start-insert -buffer-name=outline outline<CR>
+nnoremap <leader>y :<C-u>Unite -no-split -smartcase -buffer-name=yank history/yank<CR>
+nnoremap <leader>b :<C-u>Unite -no-split -smartcase -buffer-name=buffers buffer<CR>
+nnoremap <leader>c :<C-u>Unite -no-split -smartcase -buffer-name=quickfix qf<CR>
 
 "youcompleteme
 let g:ycm_collect_identifiers_from_tags_files = 1
