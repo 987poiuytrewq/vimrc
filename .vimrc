@@ -116,15 +116,13 @@ nnoremap <leader>q :Bdelete<CR>
 nnoremap <leader>k <C-u>
 nnoremap <leader>j <C-d>
 nnoremap <leader>w <C-w>w
-nnoremap <leader>r :redraw!<CR>
+nnoremap <leader>n :nohlsearch<CR>
 
 "git gutter
 let g:gitgutter_realtime = 1
-let g:vim_tags_gems_tags_command = ""
 
 "vim-tags
 let g:vim_tags_auto_generate = 1
-unlet g:vim_tags_gems_tags_command
 
 "syntastic
 let g:syntastic_always_populate_loc_list = 1
@@ -156,7 +154,7 @@ call unite#custom#source('file,file/async', 'converters', ['converter_tail_abbr'
 call unite#custom#source('file_rec/git', 'converters', ['converter_relative_abbr'])
 call unite#custom#source('file,file/async,file_rec/git', 'matchers', ['matcher_fuzzy'])
 call unite#custom#source('file,file/async,file_rec/git,buffer', 'sorters', ['sorter_selecta'])
-nnoremap <leader>d :<C-u>Unite -no-split -smartcase -buffer-name=directories -start-insert file/async<CR>
+nnoremap <leader>d :<C-u>UniteWithBufferDir -no-split -smartcase -buffer-name=directories -start-insert file/async<CR>
 nnoremap <leader>f :<C-u>Unite -no-split -smartcase -buffer-name=files -start-insert file_rec/git:--cached:--others:--exclude-standard<CR>
 nnoremap <leader>r :<C-u>Unite -no-split -smartcase -buffer-name=recent -start-insert file_mru<CR>
 nnoremap <leader>t :<C-u>UniteWithInput -no-split -smartcase -buffer-name=tags tag<CR>
@@ -169,11 +167,14 @@ nnoremap <leader>c :<C-u>Unite -no-split -smartcase -buffer-name=quickfix qf<CR>
 "youcompleteme
 let g:ycm_collect_identifiers_from_tags_files = 1
 let g:vim_tags_use_vim_dispatch = 1
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType eruby set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType ruby set omnifunc=rubycomplete#Complete
+set omnifunc=syntaxcomplete#Complete
+" autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+" autocmd FileType html,markdown set omnifunc=htmlcomplete#CompleteTags
+" autocmd FileType eruby set omnifunc=htmlcomplete#CompleteTags
+" autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+" autocmd FileType ruby set omnifunc=rubycomplete#Complete
+autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
 autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
-autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
+autocmd FileType ruby,eruby let g:rubycomplete_include_object = 1
+autocmd FileType ruby,eruby let g:rubycomplete_include_objectspace = 1
