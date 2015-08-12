@@ -53,6 +53,7 @@ Plugin 'tpope/vim-endwise'
 Plugin 'kana/vim-textobj-user'
 Plugin 'nelstrom/vim-textobj-rubyblock'
 " Plugin 'astashov/vim-ruby-debugger'
+Plugin 'thoughtbot/vim-rspec'
 
 "colors
 Plugin 'vim-scripts/CSApprox'
@@ -123,6 +124,7 @@ let g:gitgutter_realtime = 1
 
 "vim-tags
 let g:vim_tags_auto_generate = 1
+unlet g:vim_tags_gems_tags_command
 
 "syntastic
 let g:syntastic_always_populate_loc_list = 1
@@ -178,3 +180,6 @@ autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
 autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 autocmd FileType ruby,eruby let g:rubycomplete_include_object = 1
 autocmd FileType ruby,eruby let g:rubycomplete_include_objectspace = 1
+
+"rspec
+command Rspec :call RunNearestSpec()<CR>
