@@ -16,10 +16,10 @@ Plugin 'gregsexton/gitv'
 "nav
 Plugin 'tpope/vim-eunuch'
 Plugin 'moll/vim-bbye'
-" Plugin 'wting/gitsessions.vim'
 Plugin 'bkad/CamelCaseMotion'
 Plugin 'vimtaku/hl_matchit.vim'
 Plugin 'tpope/vim-surround'
+Plugin 'terryma/vim-smooth-scroll'
 
 "unite
 Plugin 'Shougo/unite.vim'
@@ -38,6 +38,7 @@ Plugin 'szw/vim-tags'
 "edit
 Plugin 'tpope/vim-commentary'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'Raimondi/delimitMate'
 
 "interface
 Plugin 'scrooloose/syntastic'
@@ -114,17 +115,19 @@ set hidden
 nnoremap <leader>l :bnext<CR>
 nnoremap <leader>h :bprev<CR>
 nnoremap <leader>q :Bdelete<CR>
-nnoremap <leader>k <C-u>
-nnoremap <leader>j <C-d>
+nnoremap <leader>k :call smooth_scroll#up(&scroll, 10, 5)<CR>
+nnoremap <leader>j :call smooth_scroll#down(&scroll, 10, 5)<CR>
 nnoremap <leader>w <C-w>w
 nnoremap <leader>n :nohlsearch<CR>
 
 "git gutter
+nmap <leader>cs <Plug>GitGutterStageHunk
+nmap <leader>cr <Plug>GitGutterRevertHunk
+nmap <leader>cp <Plug>GitGutterPreviewHunk
 let g:gitgutter_realtime = 1
 
 "vim-tags
 let g:vim_tags_auto_generate = 1
-unlet g:vim_tags_gems_tags_command
 
 "syntastic
 let g:syntastic_always_populate_loc_list = 1
@@ -156,30 +159,44 @@ call unite#custom#source('file,file/async', 'converters', ['converter_tail_abbr'
 call unite#custom#source('file_rec/git', 'converters', ['converter_relative_abbr'])
 call unite#custom#source('file,file/async,file_rec/git', 'matchers', ['matcher_fuzzy'])
 call unite#custom#source('file,file/async,file_rec/git,buffer', 'sorters', ['sorter_selecta'])
-nnoremap <leader>d :<C-u>UniteWithBufferDir -no-split -smartcase -buffer-name=directories -start-insert file/async<CR>
+nnoremap <leader>d :<C-u>UniteWithBufferDir -no-split -smartcase -buffer-name=directories -start-insert file<CR>
 nnoremap <leader>f :<C-u>Unite -no-split -smartcase -buffer-name=files -start-insert file_rec/git:--cached:--others:--exclude-standard<CR>
 nnoremap <leader>r :<C-u>Unite -no-split -smartcase -buffer-name=recent -start-insert file_mru<CR>
 nnoremap <leader>t :<C-u>UniteWithInput -no-split -smartcase -buffer-name=tags tag<CR>
 nnoremap <leader>g :<C-u>Unite -no-split -smartcase -buffer-name=grep grep/git<CR>
+nnoremap <leader>p :<C-u>UniteResume -buffer-name=grep<CR>
 nnoremap <leader>o :<C-u>Unite -no-split -smartcase -start-insert -buffer-name=outline outline<CR>
 nnoremap <leader>y :<C-u>Unite -no-split -smartcase -buffer-name=yank history/yank<CR>
 nnoremap <leader>b :<C-u>Unite -no-split -smartcase -buffer-name=buffers buffer<CR>
 nnoremap <leader>c :<C-u>Unite -no-split -smartcase -buffer-name=quickfix qf<CR>
 
+"unite customisation
+function! s:unite_directory_keybindings()
+  imap <buffer> <C-j> <Plug>(unite_delete_backward_path)
+endfunction
+autocmd FileType unite call s:unite_directory_keybindings()
+
+let s:unite_delete_file_action = {
+  \ 'description' : 'Delete file',
+  \ 'is_selectable' : 1,
+  \ }
+function! s:unite_delete_file_action.func(candidates)
+  for candidate in a:candidates
+    let path = candidate.action__path
+    echo 'Deleted ' . path
+    call delete(path)
+  endfor
+endfunction
+call unite#custom#action('source/file/file', 'delete', s:unite_delete_file_action)
+
 "youcompleteme
 let g:ycm_collect_identifiers_from_tags_files = 1
 let g:vim_tags_use_vim_dispatch = 1
 set omnifunc=syntaxcomplete#Complete
-" autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-" autocmd FileType html,markdown set omnifunc=htmlcomplete#CompleteTags
-" autocmd FileType eruby set omnifunc=htmlcomplete#CompleteTags
-" autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-" autocmd FileType ruby set omnifunc=rubycomplete#Complete
-autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
-autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
-autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
-autocmd FileType ruby,eruby let g:rubycomplete_include_object = 1
-autocmd FileType ruby,eruby let g:rubycomplete_include_objectspace = 1
+" autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
+" autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+" autocmd FileType ruby,eruby let g:rubycomplete_include_object = 1
+" autocmd FileType ruby,eruby let g:rubycomplete_include_objectspace = 1
 
 "rspec
 command Rspec :call RunNearestSpec()<CR>
