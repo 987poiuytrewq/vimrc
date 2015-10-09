@@ -1,5 +1,4 @@
-set shell=bash
-
+set shell=/bin/bash\ --rcfile\ ~/.profile
 
 "vundle
 set nocompatible
@@ -38,7 +37,6 @@ Plugin 'szw/vim-tags'
 "edit
 Plugin 'tpope/vim-commentary'
 Plugin 'Valloric/YouCompleteMe'
-Plugin 'Raimondi/delimitMate'
 
 "interface
 Plugin 'scrooloose/syntastic'
@@ -47,7 +45,7 @@ Plugin 'bling/vim-airline'
 "file types
 Plugin 'ekalinin/Dockerfile.vim'
 
-" ruby
+"ruby
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-endwise'
@@ -57,15 +55,15 @@ Plugin 'nelstrom/vim-textobj-rubyblock'
 Plugin 'thoughtbot/vim-rspec'
 
 "colors
-Plugin 'vim-scripts/CSApprox'
+" Plugin 'vim-scripts/CSApprox'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'romainl/flattened'
+Plugin 'vim-scripts/unite-colorscheme'
 
 call vundle#end()
 
 filetype plugin indent on
 set number
-set relativenumber
 syntax enable
 set mouse=a
 set clipboard=unnamed,unnamedplus
@@ -78,7 +76,7 @@ let mapleader = "\<Space>"
 "colors
 set t_Co=256
 set background=dark
-colorscheme flattened_dark
+colorscheme badwolf
 highlight Normal ctermbg=none
 highlight NonText ctermbg=none
 highlight SpellBad ctermbg=none
@@ -114,9 +112,13 @@ set nofoldenable
 set hidden
 nnoremap <leader>l :bnext<CR>
 nnoremap <leader>h :bprev<CR>
-nnoremap <leader>q :Bdelete<CR>
 nnoremap <leader>k :call smooth_scroll#up(&scroll, 10, 5)<CR>
 nnoremap <leader>j :call smooth_scroll#down(&scroll, 10, 5)<CR>
+nnoremap <C-l> :bnext<CR>
+nnoremap <C-h> :bprev<CR>
+nnoremap <C-k> :call smooth_scroll#up(&scroll, 10, 5)<CR>
+nnoremap <C-j> :call smooth_scroll#down(&scroll, 10, 5)<CR>
+nnoremap <leader>q :Bdelete<CR>
 nnoremap <leader>w <C-w>w
 nnoremap <leader>n :nohlsearch<CR>
 
@@ -154,13 +156,13 @@ let g:unite_source_history_yank_enable = 1
 let g:unite_source_tag_show_location = 0
 let g:unite_source_tag_max_name_length = 100
 let g:unite_source_tag_max_fname_length = 100
+call unite#filters#matcher_default#use('matcher_fuzzy')
+call unite#filters#sorter_default#use('sorter_selecta')
 call unite#custom#source('file_mru', 'matchers', ['matcher_project_files', 'matcher_fuzzy'])
-call unite#custom#source('file,file/async', 'converters', ['converter_tail_abbr'])
-call unite#custom#source('file_rec/git', 'converters', ['converter_relative_abbr'])
-call unite#custom#source('file,file/async,file_rec/git', 'matchers', ['matcher_fuzzy'])
-call unite#custom#source('file,file/async,file_rec/git,buffer', 'sorters', ['sorter_selecta'])
-nnoremap <leader>d :<C-u>UniteWithBufferDir -no-split -smartcase -buffer-name=directories -start-insert file<CR>
-nnoremap <leader>f :<C-u>Unite -no-split -smartcase -buffer-name=files -start-insert file_rec/git:--cached:--others:--exclude-standard<CR>
+call unite#custom#source('file', 'converters', ['converter_tail_abbr'])
+call unite#custom#source('file_rec,file_rec/git', 'converters', ['converter_relative_abbr'])
+nnoremap <leader>d :<C-u>UniteWithBufferDir -no-split -smartcase -buffer-name=directories -start-insert -hide-source-names file file/new directory/new<CR>
+nnoremap <leader>f :<C-u>Unite -no-split -smartcase -buffer-name=files -start-insert file_rec/git:--cached<CR>
 nnoremap <leader>r :<C-u>Unite -no-split -smartcase -buffer-name=recent -start-insert file_mru<CR>
 nnoremap <leader>t :<C-u>UniteWithInput -no-split -smartcase -buffer-name=tags tag<CR>
 nnoremap <leader>g :<C-u>Unite -no-split -smartcase -buffer-name=grep grep/git<CR>
