@@ -20,6 +20,7 @@ Plugin 'bkad/CamelCaseMotion'
 Plugin 'vimtaku/hl_matchit.vim'
 Plugin 'tpope/vim-surround'
 Plugin 'terryma/vim-smooth-scroll'
+Plugin 'christoomey/vim-tmux-navigator'
 
 "unite
 Plugin 'Shougo/unite.vim'
@@ -37,7 +38,7 @@ Plugin 'szw/vim-tags'
 
 "edit
 Plugin 'tpope/vim-commentary'
-Plugin 'Valloric/YouCompleteMe'
+" Plugin 'Valloric/YouCompleteMe'
 Plugin 'Raimondi/delimitMate'
 
 "interface
@@ -57,15 +58,14 @@ Plugin 'nelstrom/vim-textobj-rubyblock'
 Plugin 'thoughtbot/vim-rspec'
 
 "colors
-Plugin 'vim-scripts/CSApprox'
-Plugin 'flazz/vim-colorschemes'
-Plugin 'romainl/flattened'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'tomasr/molokai'
+Plugin 'w0ng/vim-hybrid'
 
 call vundle#end()
 
 filetype plugin indent on
 set number
-set relativenumber
 syntax enable
 set mouse=a
 set clipboard=unnamed,unnamedplus
@@ -78,7 +78,8 @@ let mapleader = "\<Space>"
 "colors
 set t_Co=256
 set background=dark
-colorscheme flattened_dark
+colorscheme molokai
+let g:airline_theme = 'dark'
 highlight Normal ctermbg=none
 highlight NonText ctermbg=none
 highlight SpellBad ctermbg=none
@@ -117,6 +118,8 @@ nnoremap <leader>h :bprev<CR>
 nnoremap <leader>q :Bdelete<CR>
 nnoremap <leader>k :call smooth_scroll#up(&scroll, 10, 5)<CR>
 nnoremap <leader>j :call smooth_scroll#down(&scroll, 10, 5)<CR>
+nnoremap <C-q> :call smooth_scroll#up(&scroll, 10, 5)<CR>
+nnoremap <C-j> :call smooth_scroll#down(&scroll, 10, 5)<CR>
 nnoremap <leader>w <C-w>w
 nnoremap <leader>n :nohlsearch<CR>
 
@@ -139,6 +142,7 @@ let g:syntastic_quiet_messages = { "level": "warnings", "type": "style" }
 let g:syntastic_javascript_checkers = ['jsxhint']
 let g:syntastic_css_checkers = ['csslint']
 let g:syntastic_sass_checkers = ['sass']
+let g:syntastic_json_checkers = ['jsonlint']
 
 "airline
 let g:airline_extensions = ['tabline', 'branch', 'unite', 'syntastic']
@@ -160,7 +164,7 @@ call unite#custom#source('file_rec/git', 'converters', ['converter_relative_abbr
 call unite#custom#source('file,file/async,file_rec/git', 'matchers', ['matcher_fuzzy'])
 call unite#custom#source('file,file/async,file_rec/git,buffer', 'sorters', ['sorter_selecta'])
 nnoremap <leader>d :<C-u>UniteWithBufferDir -no-split -smartcase -buffer-name=directories -start-insert file<CR>
-nnoremap <leader>f :<C-u>Unite -no-split -smartcase -buffer-name=files -start-insert file_rec/git:--cached:--others:--exclude-standard<CR>
+nnoremap <leader>f :<C-u>Unite -no-split -smartcase -buffer-name=files -start-insert file_rec/git:--cached<CR>
 nnoremap <leader>r :<C-u>Unite -no-split -smartcase -buffer-name=recent -start-insert file_mru<CR>
 nnoremap <leader>t :<C-u>UniteWithInput -no-split -smartcase -buffer-name=tags tag<CR>
 nnoremap <leader>g :<C-u>Unite -no-split -smartcase -buffer-name=grep grep/git<CR>
