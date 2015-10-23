@@ -1,4 +1,5 @@
-set shell=/bin/bash\ --rcfile\ ~/.profile
+set shell=bash
+
 
 "vundle
 set nocompatible
@@ -37,6 +38,7 @@ Plugin 'szw/vim-tags'
 "edit
 Plugin 'tpope/vim-commentary'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'Raimondi/delimitMate'
 
 "interface
 Plugin 'scrooloose/syntastic'
@@ -45,7 +47,7 @@ Plugin 'bling/vim-airline'
 "file types
 Plugin 'ekalinin/Dockerfile.vim'
 
-"ruby
+" ruby
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-endwise'
@@ -55,10 +57,8 @@ Plugin 'nelstrom/vim-textobj-rubyblock'
 Plugin 'thoughtbot/vim-rspec'
 
 "colors
-" Plugin 'vim-scripts/CSApprox'
-Plugin 'flazz/vim-colorschemes'
-Plugin 'romainl/flattened'
-Plugin 'vim-scripts/unite-colorscheme'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'sickill/vim-monokai'
 
 call vundle#end()
 
@@ -76,7 +76,8 @@ let mapleader = "\<Space>"
 "colors
 set t_Co=256
 set background=dark
-colorscheme badwolf
+colorscheme monokai
+let g:airline_theme = 'dark'
 highlight Normal ctermbg=none
 highlight NonText ctermbg=none
 highlight SpellBad ctermbg=none
