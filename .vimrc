@@ -59,8 +59,7 @@ Plugin 'thoughtbot/vim-rspec'
 
 "colors
 Plugin 'altercation/vim-colors-solarized'
-Plugin 'tomasr/molokai'
-Plugin 'w0ng/vim-hybrid'
+Plugin 'sickill/vim-monokai'
 
 call vundle#end()
 
@@ -78,7 +77,7 @@ let mapleader = "\<Space>"
 "colors
 set t_Co=256
 set background=dark
-colorscheme molokai
+colorscheme monokai
 let g:airline_theme = 'dark'
 highlight Normal ctermbg=none
 highlight NonText ctermbg=none
