@@ -1,6 +1,5 @@
 set shell=bash
 
-
 "vundle
 set nocompatible
 filetype off
@@ -8,18 +7,27 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
-"git
-Plugin 'tpope/vim-fugitive'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'gregsexton/gitv'
+"util
+Plugin 'tpope/vim-sensible'
+Plugin 'tpope/vim-dispatch'
+Plugin 'Shougo/vimproc'
+Plugin 'szw/vim-tags'
 
-"nav
-Plugin 'tpope/vim-eunuch'
-Plugin 'moll/vim-bbye'
+"motion
+Plugin 'terryma/vim-smooth-scroll'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-commentary'
 Plugin 'bkad/CamelCaseMotion'
 Plugin 'vimtaku/hl_matchit.vim'
-Plugin 'tpope/vim-surround'
-Plugin 'terryma/vim-smooth-scroll'
+
+"buffers
+Plugin 'tpope/vim-eunuch'
+Plugin 'moll/vim-bbye'
+
+"interface
+Plugin 'scrooloose/syntastic'
+Plugin 'Shougo/neocomplete.vim'
+Plugin 'bling/vim-airline'
 
 "unite
 Plugin 'Shougo/unite.vim'
@@ -28,24 +36,10 @@ Plugin 'Shougo/neomru.vim'
 Plugin 'tsukkee/unite-tag'
 Plugin 'lambdalisue/unite-grep-vcs'
 Plugin 'sgur/unite-qf'
-Plugin 'Shougo/vimfiler.vim'
 
-"utils
-Plugin 'tpope/vim-dispatch'
-Plugin 'Shougo/vimproc'
-Plugin 'szw/vim-tags'
-
-"edit
-Plugin 'tpope/vim-commentary'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'Raimondi/delimitMate'
-
-"interface
-Plugin 'scrooloose/syntastic'
-Plugin 'bling/vim-airline'
-
-"file types
-Plugin 'ekalinin/Dockerfile.vim'
+"git
+Plugin 'tpope/vim-fugitive'
+Plugin 'airblade/vim-gitgutter'
 
 " ruby
 Plugin 'vim-ruby/vim-ruby'
@@ -53,22 +47,19 @@ Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-endwise'
 Plugin 'kana/vim-textobj-user'
 Plugin 'nelstrom/vim-textobj-rubyblock'
-" Plugin 'astashov/vim-ruby-debugger'
 Plugin 'thoughtbot/vim-rspec'
 
+"file types
+Plugin 'ekalinin/Dockerfile.vim'
+
 "colors
-Plugin 'altercation/vim-colors-solarized'
 Plugin 'sickill/vim-monokai'
 
 call vundle#end()
 
-filetype plugin indent on
 set number
-syntax enable
 set mouse=a
 set clipboard=unnamed,unnamedplus
-set viewoptions=folds,options,cursor,unix,slash
-set virtualedit=onemore
 
 "leader
 let mapleader = "\<Space>"
@@ -80,10 +71,7 @@ colorscheme monokai
 let g:airline_theme = 'dark'
 highlight Normal ctermbg=none
 highlight NonText ctermbg=none
-highlight SpellBad ctermbg=none
-highlight SpellCap ctermbg=none
 set hlsearch
-set showcmd
 
 "saving
 fun! StripTrailingWhitespace()
@@ -98,7 +86,6 @@ set nowritebackup
 set noswapfile
 autocmd TextChanged,InsertLeave * nested update
 autocmd BufWritePre * :call StripTrailingWhitespace()
-runtime macros/matchit.vim
 
 "indent
 set tabstop=2
@@ -124,10 +111,14 @@ nnoremap <leader>w <C-w>w
 nnoremap <leader>n :nohlsearch<CR>
 
 "git gutter
+let g:gitgutter_sign_column_always = 1
+let g:gitgutter_sign_added            = '➕'
+let g:gitgutter_sign_modified         = '❙'
+let g:gitgutter_sign_removed          = '▁'
+let g:gitgutter_sign_modified_removed = '❙'
 nmap <leader>cs <Plug>GitGutterStageHunk
 nmap <leader>cr <Plug>GitGutterRevertHunk
 nmap <leader>cp <Plug>GitGutterPreviewHunk
-let g:gitgutter_realtime = 1
 
 "vim-tags
 let g:vim_tags_auto_generate = 1
@@ -145,6 +136,7 @@ let g:syntastic_sass_checkers = ['sass']
 
 "airline
 let g:airline_extensions = ['tabline', 'branch', 'unite', 'syntastic']
+let g:airline_powerline_fonts=1
 let g:airline_section_x = ''
 let g:airline_section_y = ''
 let g:airline_section_z = ''
@@ -192,14 +184,9 @@ function! s:unite_delete_file_action.func(candidates)
 endfunction
 call unite#custom#action('source/file/file', 'delete', s:unite_delete_file_action)
 
-"youcompleteme
-let g:ycm_collect_identifiers_from_tags_files = 1
-let g:vim_tags_use_vim_dispatch = 1
+"neocomplete
+let g:neocomplete#enable_at_startup = 1
 set omnifunc=syntaxcomplete#Complete
-" autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
-" autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
-" autocmd FileType ruby,eruby let g:rubycomplete_include_object = 1
-" autocmd FileType ruby,eruby let g:rubycomplete_include_objectspace = 1
 
 "rspec
 command Rspec :call RunNearestSpec()<CR>
