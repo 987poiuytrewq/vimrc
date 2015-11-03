@@ -41,7 +41,7 @@ Plugin 'sgur/unite-qf'
 Plugin 'tpope/vim-fugitive'
 Plugin 'airblade/vim-gitgutter'
 
-" ruby
+"ruby
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-endwise'
@@ -57,9 +57,12 @@ Plugin 'sickill/vim-monokai'
 
 call vundle#end()
 
+"general
 set number
 set mouse=a
 set clipboard=unnamed,unnamedplus
+set ttyfast
+set ttimeoutlen=0
 
 "leader
 let mapleader = "\<Space>"
@@ -124,6 +127,7 @@ nmap <leader>cp <Plug>GitGutterPreviewHunk
 let g:vim_tags_auto_generate = 1
 
 "syntastic
+let g:syntastic_error_symbol = '××'
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
@@ -146,9 +150,6 @@ set laststatus=2
 
 "unite
 let g:unite_source_history_yank_enable = 1
-let g:unite_source_tag_show_location = 0
-let g:unite_source_tag_max_name_length = 100
-let g:unite_source_tag_max_fname_length = 100
 call unite#filters#matcher_default#use('matcher_fuzzy')
 call unite#filters#sorter_default#use('sorter_selecta')
 call unite#custom#source('file_mru', 'matchers', ['matcher_project_files', 'matcher_fuzzy'])
@@ -157,7 +158,6 @@ call unite#custom#source('file_rec,file_rec/git', 'converters', ['converter_rela
 nnoremap <leader>d :<C-u>UniteWithBufferDir -no-split -smartcase -buffer-name=directories -start-insert -hide-source-names file file/new directory/new<CR>
 nnoremap <leader>f :<C-u>Unite -no-split -smartcase -buffer-name=files -start-insert file_rec/git:--cached<CR>
 nnoremap <leader>r :<C-u>Unite -no-split -smartcase -buffer-name=recent -start-insert file_mru<CR>
-nnoremap <leader>t :<C-u>UniteWithInput -no-split -smartcase -buffer-name=tags tag<CR>
 nnoremap <leader>g :<C-u>Unite -no-split -smartcase -buffer-name=grep grep/git<CR>
 nnoremap <leader>p :<C-u>UniteResume -buffer-name=grep<CR>
 nnoremap <leader>o :<C-u>Unite -no-split -smartcase -start-insert -buffer-name=outline outline<CR>
@@ -165,28 +165,15 @@ nnoremap <leader>y :<C-u>Unite -no-split -smartcase -buffer-name=yank history/ya
 nnoremap <leader>b :<C-u>Unite -no-split -smartcase -buffer-name=buffers buffer<CR>
 nnoremap <leader>c :<C-u>Unite -no-split -smartcase -buffer-name=quickfix qf<CR>
 
-"unite customisation
-function! s:unite_directory_keybindings()
-  imap <buffer> <C-j> <Plug>(unite_delete_backward_path)
-endfunction
-autocmd FileType unite call s:unite_directory_keybindings()
 
-let s:unite_delete_file_action = {
-  \ 'description' : 'Delete file',
-  \ 'is_selectable' : 1,
-  \ }
-function! s:unite_delete_file_action.func(candidates)
-  for candidate in a:candidates
-    let path = candidate.action__path
-    echo 'Deleted ' . path
-    call delete(path)
-  endfor
-endfunction
-call unite#custom#action('source/file/file', 'delete', s:unite_delete_file_action)
-
-"neocomplete
-let g:neocomplete#enable_at_startup = 1
-set omnifunc=syntaxcomplete#Complete
+"ruby complete
+" let g:neocomplete#force_overwrite_completefunc = 1
+" let g:neocomplcache_force_omni_patterns = {}
+" let g:neocomplcache_force_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+" autocmd FileType ruby,eruby setlocal omnifunc=rubycomplete#Complete
+" autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
+" autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+" autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 
 "rspec
 command Rspec :call RunNearestSpec()<CR>
