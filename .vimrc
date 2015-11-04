@@ -34,15 +34,13 @@ NeoBundleLazy 'Shougo/neomru.vim',
       \ {'autoload':{'unite_sources':['file_mru','directory_mru']}}
 NeoBundleLazy 'lambdalisue/unite-grep-vcs',
       \ {'autoload':{'unite_sources':'grep/git'}}
+NeoBundle 'kmnk/vim-unite-giti'
 NeoBundleLazy 'osyo-manga/unite-quickfix',
       \ {'autoload':{'unite_sources':['quickfix', 'location_list']}}
 
 "git
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'airblade/vim-gitgutter'
-NeoBundleLazy 'gregsexton/gitv',
-      \ {'depends':['tpope/vim-fugitive'],
-      \  'autoload':{'commands':'Gitv'}}
 
 "ruby
 NeoBundle 'vim-ruby/vim-ruby'
@@ -128,10 +126,6 @@ let g:gitgutter_diff_args = '-b -w --ignore-blank-lines'
 nmap <leader>cs <Plug>GitGutterStageHunk
 nmap <leader>cr <Plug>GitGutterRevertHunk
 nmap <leader>cp <Plug>GitGutterPreviewHunk
-
-"gitv
-nnoremap <leader>gv :Gitv --all<CR>
-nnoremap <leader>gh :Gitv!<CR>
 
 "vim-tags
 let g:vim_tags_auto_generate = 1
