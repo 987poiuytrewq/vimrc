@@ -1,61 +1,66 @@
-set shell=bash
-
-"vundle
+"neobundle
 set nocompatible
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'gmarik/Vundle.vim'
+set runtimepath+=~/.vim/bundle/neobundle.vim/
+call neobundle#begin(expand('~/.vim/bundle/'))
+NeoBundleFetch 'Shougo/neobundle.vim'
 
 "util
-Plugin 'tpope/vim-sensible'
-Plugin 'tpope/vim-dispatch'
-Plugin 'Shougo/vimproc'
-Plugin 'szw/vim-tags'
+NeoBundle 'tpope/vim-sensible'
+NeoBundle 'tpope/vim-dispatch'
+NeoBundle 'Shougo/vimproc', {'build': 'make'}
+NeoBundle 'szw/vim-tags'
 
 "motion
-Plugin 'terryma/vim-smooth-scroll'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-commentary'
-Plugin 'bkad/CamelCaseMotion'
-Plugin 'vimtaku/hl_matchit.vim'
+NeoBundle 'terryma/vim-smooth-scroll'
+NeoBundle 'tpope/vim-surround'
+NeoBundle 'tpope/vim-commentary'
+NeoBundle 'bkad/CamelCaseMotion'
+NeoBundle 'vimtaku/hl_matchit.vim'
 
 "buffers
-Plugin 'tpope/vim-eunuch'
-Plugin 'moll/vim-bbye'
+NeoBundle 'tpope/vim-eunuch'
+NeoBundle 'moll/vim-bbye'
 
 "interface
-Plugin 'scrooloose/syntastic'
-Plugin 'Shougo/neocomplete.vim'
-Plugin 'bling/vim-airline'
+NeoBundle 'scrooloose/syntastic'
+NeoBundle 'Shougo/neocomplete.vim'
+NeoBundle 'bling/vim-airline'
 
 "unite
-Plugin 'Shougo/unite.vim'
-Plugin 'Shougo/unite-outline'
-Plugin 'Shougo/neomru.vim'
-Plugin 'tsukkee/unite-tag'
-Plugin 'lambdalisue/unite-grep-vcs'
-Plugin 'sgur/unite-qf'
+NeoBundle 'Shougo/unite.vim'
+NeoBundleLazy 'Shougo/unite-outline',
+      \ {'autoload':{'unite_sources':'outline'}}
+NeoBundleLazy 'Shougo/neomru.vim',
+      \ {'autoload':{'unite_sources':['file_mru','directory_mru']}}
+NeoBundleLazy 'lambdalisue/unite-grep-vcs',
+      \ {'autoload':{'unite_sources':'grep/git'}}
+NeoBundleLazy 'osyo-manga/unite-quickfix',
+      \ {'autoload':{'unite_sources':['quickfix', 'location_list']}}
 
 "git
-Plugin 'tpope/vim-fugitive'
-Plugin 'airblade/vim-gitgutter'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'airblade/vim-gitgutter'
+NeoBundleLazy 'gregsexton/gitv',
+      \ {'depends':['tpope/vim-fugitive'],
+      \  'autoload':{'commands':'Gitv'}}
 
 "ruby
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'tpope/vim-rails'
-Plugin 'tpope/vim-endwise'
-Plugin 'kana/vim-textobj-user'
-Plugin 'nelstrom/vim-textobj-rubyblock'
-Plugin 'thoughtbot/vim-rspec'
+NeoBundle 'vim-ruby/vim-ruby'
+NeoBundle 'tpope/vim-rails'
+NeoBundle 'tpope/vim-endwise'
+NeoBundle 'kana/vim-textobj-user'
+NeoBundle 'nelstrom/vim-textobj-rubyblock'
+NeoBundle 'thoughtbot/vim-rspec'
 
 "file types
-Plugin 'ekalinin/Dockerfile.vim'
+NeoBundleLazy 'ekalinin/Dockerfile.vim'
 
 "colors
-Plugin 'sickill/vim-monokai'
+NeoBundle 'sickill/vim-monokai'
 
-call vundle#end()
+call neobundle#end()
+filetype plugin indent on
+NeoBundleCheck
 
 "general
 set number
@@ -119,9 +124,14 @@ let g:gitgutter_sign_added            = '➕'
 let g:gitgutter_sign_modified         = '❙'
 let g:gitgutter_sign_removed          = '▁'
 let g:gitgutter_sign_modified_removed = '❙'
+let g:gitgutter_diff_args = '-b -w --ignore-blank-lines'
 nmap <leader>cs <Plug>GitGutterStageHunk
 nmap <leader>cr <Plug>GitGutterRevertHunk
 nmap <leader>cp <Plug>GitGutterPreviewHunk
+
+"gitv
+nnoremap <leader>gv :Gitv --all<CR>
+nnoremap <leader>gh :Gitv!<CR>
 
 "vim-tags
 let g:vim_tags_auto_generate = 1
@@ -156,24 +166,29 @@ call unite#custom#source('file_mru', 'matchers', ['matcher_project_files', 'matc
 call unite#custom#source('file', 'converters', ['converter_tail_abbr'])
 call unite#custom#source('file_rec,file_rec/git', 'converters', ['converter_relative_abbr'])
 nnoremap <leader>d :<C-u>UniteWithBufferDir -no-split -smartcase -buffer-name=directories -start-insert -hide-source-names file file/new directory/new<CR>
-nnoremap <leader>f :<C-u>Unite -no-split -smartcase -buffer-name=files -start-insert file_rec/git:--cached<CR>
+nnoremap <leader>f :<C-u>Unite -no-split -smartcase -buffer-name=files -start-insert file_rec/git:--cached:--others:--exclude-standard<CR>
 nnoremap <leader>r :<C-u>Unite -no-split -smartcase -buffer-name=recent -start-insert file_mru<CR>
-nnoremap <leader>g :<C-u>Unite -no-split -smartcase -buffer-name=grep grep/git<CR>
-nnoremap <leader>p :<C-u>UniteResume -buffer-name=grep<CR>
+nnoremap <leader>gg :<C-u>Unite -no-split -smartcase -buffer-name=grep grep/git<CR>
+nnoremap <leader>gp :<C-u>UniteResume grep<CR>
 nnoremap <leader>o :<C-u>Unite -no-split -smartcase -start-insert -buffer-name=outline outline<CR>
 nnoremap <leader>y :<C-u>Unite -no-split -smartcase -buffer-name=yank history/yank<CR>
 nnoremap <leader>b :<C-u>Unite -no-split -smartcase -buffer-name=buffers buffer<CR>
-nnoremap <leader>c :<C-u>Unite -no-split -smartcase -buffer-name=quickfix qf<CR>
+nnoremap <leader>c :<C-u>Unite -no-split -smartcase -buffer-name=quickfix quickfix<CR>
+nnoremap <leader>l :<C-u>Unite -no-split -smartcase -buffer-name=locations location_list<CR>
 
+"neocomplete
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_smart_case = 1
+let g:neocomplete#enable_refresh_always = 1
 
 "ruby complete
-" let g:neocomplete#force_overwrite_completefunc = 1
-" let g:neocomplcache_force_omni_patterns = {}
-" let g:neocomplcache_force_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
-" autocmd FileType ruby,eruby setlocal omnifunc=rubycomplete#Complete
-" autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
-" autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
-" autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
+let g:neocomplete#force_overwrite_completefunc = 1
+let g:neocomplcache_force_omni_patterns = {}
+let g:neocomplcache_force_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+autocmd FileType ruby,eruby setlocal omnifunc=rubycomplete#Complete
+autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
+autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 
 "rspec
 command Rspec :call RunNearestSpec()<CR>
