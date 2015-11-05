@@ -7,7 +7,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 "util
 NeoBundle 'tpope/vim-sensible'
 NeoBundle 'tpope/vim-dispatch'
-NeoBundle 'Shougo/vimproc', {'build': 'make'}
+NeoBundle 'Shougo/vimproc.vim', {'build':{'unix':'make'}}
 NeoBundle 'szw/vim-tags'
 
 "motion
@@ -23,7 +23,7 @@ NeoBundle 'moll/vim-bbye'
 
 "interface
 NeoBundle 'scrooloose/syntastic'
-NeoBundle 'Shougo/neocomplete.vim'
+NeoBundle 'Valloric/YouCompleteMe', {'build':{'unix':'./install.py'}}
 NeoBundle 'bling/vim-airline'
 
 "unite
@@ -34,7 +34,8 @@ NeoBundleLazy 'Shougo/neomru.vim',
       \ {'autoload':{'unite_sources':['file_mru','directory_mru']}}
 NeoBundleLazy 'lambdalisue/unite-grep-vcs',
       \ {'autoload':{'unite_sources':'grep/git'}}
-NeoBundle 'kmnk/vim-unite-giti'
+NeoBundleLazy 'kmnk/vim-unite-giti',
+      \ {'autoload':{'unit_sources':'giti'}}
 NeoBundleLazy 'osyo-manga/unite-quickfix',
       \ {'autoload':{'unite_sources':['quickfix', 'location_list']}}
 
@@ -170,19 +171,16 @@ nnoremap <leader>b :<C-u>Unite -no-split -smartcase -buffer-name=buffers buffer<
 nnoremap <leader>c :<C-u>Unite -no-split -smartcase -buffer-name=quickfix quickfix<CR>
 nnoremap <leader>l :<C-u>Unite -no-split -smartcase -buffer-name=locations location_list<CR>
 
-"neocomplete
-let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#enable_smart_case = 1
-let g:neocomplete#enable_refresh_always = 1
-
 "ruby complete
 let g:neocomplete#force_overwrite_completefunc = 1
 let g:neocomplcache_force_omni_patterns = {}
 let g:neocomplcache_force_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
-autocmd FileType ruby,eruby setlocal omnifunc=rubycomplete#Complete
-autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
-autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
-autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
+setlocal omnifunc=syntaxcomplete#Complete
+let g:rubycomplete_rails = 1
+let g:rubycomplete_buffer_loading = 1
+let g:rubycomplete_classes_in_global = 1
+let g:rubycomplete_include_object = 1
+let g:rubycomplete_include_objectspace = 1
 
 "rspec
 command Rspec :call RunNearestSpec()<CR>
