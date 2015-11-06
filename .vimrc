@@ -163,18 +163,22 @@ call unite#custom#source('file_rec,file_rec/git', 'converters', ['converter_rela
 nnoremap <leader>d :<C-u>UniteWithBufferDir -no-split -smartcase -buffer-name=directories -start-insert -hide-source-names file file/new directory/new<CR>
 nnoremap <leader>f :<C-u>Unite -no-split -smartcase -buffer-name=files -start-insert file_rec/git:--cached:--others:--exclude-standard<CR>
 nnoremap <leader>r :<C-u>Unite -no-split -smartcase -buffer-name=recent -start-insert file_mru<CR>
-nnoremap <leader>gg :<C-u>Unite -no-split -smartcase -buffer-name=grep grep/git<CR>
-nnoremap <leader>gp :<C-u>UniteResume grep<CR>
 nnoremap <leader>o :<C-u>Unite -no-split -smartcase -start-insert -buffer-name=outline outline<CR>
 nnoremap <leader>y :<C-u>Unite -no-split -smartcase -buffer-name=yank history/yank<CR>
 nnoremap <leader>b :<C-u>Unite -no-split -smartcase -buffer-name=buffers buffer<CR>
 nnoremap <leader>c :<C-u>Unite -no-split -smartcase -buffer-name=quickfix quickfix<CR>
 nnoremap <leader>l :<C-u>Unite -no-split -smartcase -buffer-name=locations location_list<CR>
+nnoremap <leader>gg :<C-u>Unite -no-split -smartcase -buffer-name=grep grep/git<CR>
+nnoremap <leader>gp :<C-u>UniteResume grep<CR>
+nnoremap <leader>gb :<C-u>Unite -no-split -buffer-name=gitbranches giti/branch_all<CR>
+nnoremap <leader>gs :<C-u>Unite -no-split -buffer-name=gitstatus giti/status<CR>
+nnoremap <leader>gl :<C-u>Unite -no-split -buffer-name=gitlog giti/log<CR>
 
+"youcompleteme
+let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_seed_identifiers_with_syntax = 1
+"
 "ruby complete
-let g:neocomplete#force_overwrite_completefunc = 1
-let g:neocomplcache_force_omni_patterns = {}
-let g:neocomplcache_force_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 setlocal omnifunc=syntaxcomplete#Complete
 let g:rubycomplete_rails = 1
 let g:rubycomplete_buffer_loading = 1
