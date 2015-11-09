@@ -44,7 +44,6 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'airblade/vim-gitgutter'
 
 "ruby
-NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'tpope/vim-rails'
 NeoBundle 'tpope/vim-endwise'
 NeoBundle 'kana/vim-textobj-user'
@@ -53,6 +52,8 @@ NeoBundle 'thoughtbot/vim-rspec'
 
 "file types
 NeoBundleLazy 'ekalinin/Dockerfile.vim'
+autocmd FileType Dockerfile NeoBundleSource 'ekalinin/Dockerfile.vim'
+
 
 "colors
 NeoBundle 'sickill/vim-monokai'
@@ -80,8 +81,14 @@ highlight Normal ctermbg=none
 highlight NonText ctermbg=none
 set hlsearch
 
+"hl_matchit
+let g:hl_matchit_enable_on_vim_startup = 1
+let g:hl_matchit_hl_groupname = 'Search'
+let g:hl_matchit_cursor_wait = 0.050
+let g:hl_matchit_hl_priority = 1
+
 "saving
-fun! StripTrailingWhitespace()
+function! StripTrailingWhitespace()
   let l = line(".")
   let c = col(".")
   %s/\s\+$//e
@@ -166,8 +173,8 @@ nnoremap <leader>r :<C-u>Unite -no-split -smartcase -buffer-name=recent -start-i
 nnoremap <leader>o :<C-u>Unite -no-split -smartcase -start-insert -buffer-name=outline outline<CR>
 nnoremap <leader>y :<C-u>Unite -no-split -smartcase -buffer-name=yank history/yank<CR>
 nnoremap <leader>b :<C-u>Unite -no-split -smartcase -buffer-name=buffers buffer<CR>
-nnoremap <leader>c :<C-u>Unite -no-split -smartcase -buffer-name=quickfix quickfix<CR>
-nnoremap <leader>l :<C-u>Unite -no-split -smartcase -buffer-name=locations location_list<CR>
+nnoremap <leader>cc :<C-u>Unite -no-split -smartcase -buffer-name=quickfix quickfix<CR>
+nnoremap <leader>cl :<C-u>Unite -no-split -smartcase -buffer-name=locations location_list<CR>
 nnoremap <leader>gg :<C-u>Unite -no-split -smartcase -buffer-name=grep grep/git<CR>
 nnoremap <leader>gp :<C-u>UniteResume grep<CR>
 nnoremap <leader>gb :<C-u>Unite -no-split -buffer-name=gitbranches giti/branch_all<CR>
