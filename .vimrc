@@ -11,10 +11,10 @@ NeoBundle 'Shougo/vimproc.vim', {'build':{'unix':'make'}}
 NeoBundle 'szw/vim-tags'
 
 "motion
+NeoBundleLazy 'bkad/CamelCaseMotion'
 NeoBundle 'terryma/vim-smooth-scroll'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-commentary'
-NeoBundle 'bkad/CamelCaseMotion'
 NeoBundle 'vimtaku/hl_matchit.vim'
 
 "buffers
@@ -50,6 +50,9 @@ NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'nelstrom/vim-textobj-rubyblock'
 NeoBundle 'thoughtbot/vim-rspec'
 
+"db
+" NeoBundle 'vim-scripts/dbext.vim'
+
 "file types
 NeoBundleLazy 'ekalinin/Dockerfile.vim'
 autocmd FileType Dockerfile NeoBundleSource 'ekalinin/Dockerfile.vim'
@@ -74,6 +77,12 @@ set ttimeoutlen=0
 
 "leader
 let mapleader = "\<Space>"
+
+"camelcasemotion
+map ,w <Plug>CamelCaseMotion_w
+map ,b <Plug>CamelCaseMotion_b
+map ,e <Plug>CamelCaseMotion_e
+NeoBundleSource 'bkad/CamelCaseMotion'
 
 "colors
 set t_Co=256
@@ -198,3 +207,8 @@ setlocal omnifunc=syntaxcomplete#Complete
 
 "rspec
 command Rspec :call RunNearestSpec()<CR>
+
+"dbext
+" let g:rails_no_dbext = 1
+" let g:dbext_default_profile_hubbub_development = 'type=MYSQL:user=root:dbname=hubbub_development:extra=-t'
+" let g:dbext_default_profile = 'hubbub_development'
