@@ -53,7 +53,10 @@ NeoBundle 'thoughtbot/vim-rspec'
 "file types
 NeoBundleLazy 'ekalinin/Dockerfile.vim'
 autocmd FileType Dockerfile NeoBundleSource 'ekalinin/Dockerfile.vim'
-
+NeoBundleLazy 'pangloss/vim-javascript'
+autocmd FileType javascript NeoBundleSource 'pangloss/vim-javascript'
+NeoBundleLazy 'mxw/vim-jsx'
+autocmd FileType javascript NeoBundleSource 'mxw/vim-jsx'
 
 "colors
 NeoBundle 'sickill/vim-monokai'
