@@ -226,3 +226,6 @@ command Rspec :call RunNearestSpec()<CR>
 " let g:rails_no_dbext = 1
 " let g:dbext_default_profile_hubbub_development = 'type=MYSQL:user=root:dbname=hubbub_development:extra=-t'
 " let g:dbext_default_profile = 'hubbub_development'
+
+"macros
+command HashTorpedo :%s/ ["':]\(\S*\)["'] => / \1: /g
