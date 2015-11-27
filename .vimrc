@@ -50,9 +50,6 @@ NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'nelstrom/vim-textobj-rubyblock'
 NeoBundle 'thoughtbot/vim-rspec'
 
-"db
-" NeoBundle 'vim-scripts/dbext.vim'
-
 "file types
 NeoBundleLazy 'ekalinin/Dockerfile.vim'
 autocmd FileType Dockerfile NeoBundleSource 'ekalinin/Dockerfile.vim'
@@ -207,8 +204,3 @@ setlocal omnifunc=syntaxcomplete#Complete
 
 "rspec
 command Rspec :call RunNearestSpec()<CR>
-
-"dbext
-" let g:rails_no_dbext = 1
-" let g:dbext_default_profile_hubbub_development = 'type=MYSQL:user=root:dbname=hubbub_development:extra=-t'
-" let g:dbext_default_profile = 'hubbub_development'
