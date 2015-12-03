@@ -161,12 +161,19 @@ let g:syntastic_sass_checkers = ['sass']
 
 "airline
 let g:airline_extensions = ['tabline', 'branch', 'unite', 'syntastic']
-let g:airline_powerline_fonts=1
+let g:airline_powerline_fonts = 1
 let g:airline_section_x = ''
 let g:airline_section_y = ''
 let g:airline_section_z = ''
 let g:airline_left_sep = ''
 let g:airline_right_sep = ''
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+let g:airline#extensions#tabline#show_tab_type = 0
+let g:airline#extensions#tabline#left_sep = ''
+let g:airline#extensions#tabline#left_alt_sep = ''
+let g:airline#extensions#tabline#right_sep = ''
+let g:airline#extensions#tabline#right_alt_sep = ''
 set laststatus=2
 
 "unite
@@ -176,6 +183,7 @@ call unite#filters#sorter_default#use('sorter_selecta')
 call unite#custom#source('file_mru', 'matchers', ['matcher_project_files', 'matcher_fuzzy'])
 call unite#custom#source('file', 'converters', ['converter_tail_abbr'])
 call unite#custom#source('file_rec,file_rec/git', 'converters', ['converter_relative_abbr'])
+nnoremap <leader># :<C-u>Unite -no-split -smartcase -buffer-name=directories -start-insert -hide-source-names file file/new directory/new<CR>
 nnoremap <leader>d :<C-u>UniteWithBufferDir -no-split -smartcase -buffer-name=directories -start-insert -hide-source-names file file/new directory/new<CR>
 nnoremap <leader>f :<C-u>Unite -no-split -smartcase -buffer-name=files -start-insert file_rec/git:--cached:--others:--exclude-standard<CR>
 nnoremap <leader>r :<C-u>Unite -no-split -smartcase -buffer-name=recent -start-insert file_mru<CR>
@@ -189,6 +197,12 @@ nnoremap <leader>gp :<C-u>UniteResume grep<CR>
 nnoremap <leader>gb :<C-u>Unite -no-split -buffer-name=gitbranches giti/branch_all<CR>
 nnoremap <leader>gs :<C-u>Unite -no-split -buffer-name=gitstatus giti/status<CR>
 nnoremap <leader>gl :<C-u>Unite -no-split -buffer-name=gitlog giti/log<CR>
+
+"unite customisation
+function! s:unite_directory_keybindings()
+  imap <buffer> <C-h> <Plug>(unite_delete_backward_path)
+endfunction
+autocmd FileType unite call s:unite_directory_keybindings()
 
 "youcompleteme
 let g:ycm_collect_identifiers_from_tags_files = 1
@@ -204,3 +218,11 @@ setlocal omnifunc=syntaxcomplete#Complete
 
 "rspec
 command Rspec :call RunNearestSpec()<CR>
+
+"dbext
+" let g:rails_no_dbext = 1
+" let g:dbext_default_profile_hubbub_development = 'type=MYSQL:user=root:dbname=hubbub_development:extra=-t'
+" let g:dbext_default_profile = 'hubbub_development'
+
+"macros
+command HashTorpedo :%s/ ["':]\(\S*\)["'] => / \1: /g
