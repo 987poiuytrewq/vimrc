@@ -56,7 +56,10 @@ NeoBundle 'thoughtbot/vim-rspec'
 "file types
 NeoBundleLazy 'ekalinin/Dockerfile.vim'
 autocmd FileType Dockerfile NeoBundleSource 'ekalinin/Dockerfile.vim'
-
+NeoBundleLazy 'pangloss/vim-javascript'
+autocmd FileType javascript NeoBundleSource 'pangloss/vim-javascript'
+NeoBundleLazy 'mxw/vim-jsx'
+autocmd FileType javascript NeoBundleSource 'mxw/vim-jsx'
 
 "colors
 NeoBundle 'sickill/vim-monokai'
@@ -156,6 +159,7 @@ nmap <leader>cp <Plug>GitGutterPreviewHunk
 let g:vim_tags_auto_generate = 1
 
 "syntastic
+highlight link SyntasticError GitGutterLineRemoved
 let g:syntastic_error_symbol = '✖'
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
@@ -175,6 +179,13 @@ let g:airline_section_y = ''
 let g:airline_section_z = ''
 let g:airline_left_sep = ''
 let g:airline_right_sep = ''
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+let g:airline#extensions#tabline#show_tab_type = 0
+let g:airline#extensions#tabline#left_sep = ''
+let g:airline#extensions#tabline#left_alt_sep = ''
+let g:airline#extensions#tabline#right_sep = ''
+let g:airline#extensions#tabline#right_alt_sep = ''
 set laststatus=2
 
 "unite
@@ -184,6 +195,7 @@ call unite#filters#sorter_default#use('sorter_selecta')
 call unite#custom#source('file_mru', 'matchers', ['matcher_project_files', 'matcher_fuzzy'])
 call unite#custom#source('file', 'converters', ['converter_tail_abbr'])
 call unite#custom#source('file_rec,file_rec/git', 'converters', ['converter_relative_abbr'])
+nnoremap <leader># :<C-u>Unite -no-split -smartcase -buffer-name=directories -start-insert -hide-source-names file file/new directory/new<CR>
 nnoremap <leader>d :<C-u>UniteWithBufferDir -no-split -smartcase -buffer-name=directories -start-insert -hide-source-names file file/new directory/new<CR>
 nnoremap <leader>f :<C-u>Unite -no-split -smartcase -buffer-name=files -start-insert file_rec/git:--cached:--others:--exclude-standard<CR>
 nnoremap <leader>r :<C-u>Unite -no-split -smartcase -buffer-name=recent -start-insert file_mru<CR>
@@ -198,6 +210,12 @@ nnoremap <leader>gb :<C-u>Unite -no-split -buffer-name=gitbranches giti/branch_a
 nnoremap <leader>gs :<C-u>Unite -no-split -buffer-name=gitstatus giti/status<CR>
 nnoremap <leader>gl :<C-u>Unite -no-split -buffer-name=gitlog giti/log<CR>
 
+"unite customisation
+function! s:unite_directory_keybindings()
+  imap <buffer> <C-h> <Plug>(unite_delete_backward_path)
+endfunction
+autocmd FileType unite call s:unite_directory_keybindings()
+
 "youcompleteme
 let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_seed_identifiers_with_syntax = 1
@@ -205,10 +223,10 @@ let g:ycm_seed_identifiers_with_syntax = 1
 "ruby complete
 setlocal omnifunc=syntaxcomplete#Complete
 let g:rubycomplete_rails = 1
-let g:rubycomplete_buffer_loading = 1
-let g:rubycomplete_classes_in_global = 1
-let g:rubycomplete_include_object = 1
-let g:rubycomplete_include_objectspace = 1
+" let g:rubycomplete_buffer_loading = 1
+" let g:rubycomplete_classes_in_global = 1
+" let g:rubycomplete_include_object = 1
+" let g:rubycomplete_include_objectspace = 1
 
 "rspec
 command Rspec :call RunNearestSpec()<CR>
@@ -217,3 +235,6 @@ command Rspec :call RunNearestSpec()<CR>
 " let g:rails_no_dbext = 1
 " let g:dbext_default_profile_hubbub_development = 'type=MYSQL:user=root:dbname=hubbub_development:extra=-t'
 " let g:dbext_default_profile = 'hubbub_development'
+
+"macros
+command HashTorpedo :%s/ ["':]\(\S*\)["'] => / \1: /g
