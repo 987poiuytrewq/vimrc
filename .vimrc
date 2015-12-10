@@ -194,6 +194,7 @@ call unite#filters#matcher_default#use('matcher_fuzzy')
 call unite#filters#sorter_default#use('sorter_selecta')
 call unite#custom#source('file_mru', 'matchers', ['matcher_project_files', 'matcher_fuzzy'])
 call unite#custom#source('file', 'converters', ['converter_tail_abbr'])
+call unite#custom#source('file', 'matchers', ['matcher_default'])
 call unite#custom#source('file_rec,file_rec/git', 'converters', ['converter_relative_abbr'])
 nnoremap <leader># :<C-u>Unite -no-split -smartcase -buffer-name=directories -start-insert -hide-source-names file file/new directory/new<CR>
 nnoremap <leader>d :<C-u>UniteWithBufferDir -no-split -smartcase -buffer-name=directories -start-insert -hide-source-names file file/new directory/new<CR>
@@ -229,7 +230,7 @@ let g:rubycomplete_rails = 1
 " let g:rubycomplete_include_objectspace = 1
 
 "rspec
-command Rspec :call RunNearestSpec()<CR>
+command! Rspec :call RunNearestSpec()<CR>
 
 "dbext
 " let g:rails_no_dbext = 1
@@ -237,4 +238,4 @@ command Rspec :call RunNearestSpec()<CR>
 " let g:dbext_default_profile = 'hubbub_development'
 
 "macros
-command HashTorpedo :%s/ ["':]\(\S*\)["'] => / \1: /g
+command! HashTorpedo :%s/ ["':]\(\S*\)["']* => / \1: /g
