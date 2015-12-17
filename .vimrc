@@ -224,18 +224,13 @@ let g:ycm_seed_identifiers_with_syntax = 1
 "ruby complete
 setlocal omnifunc=syntaxcomplete#Complete
 let g:rubycomplete_rails = 1
-" let g:rubycomplete_buffer_loading = 1
-" let g:rubycomplete_classes_in_global = 1
-" let g:rubycomplete_include_object = 1
-" let g:rubycomplete_include_objectspace = 1
+" let g:rubycomplete_buffer_loading = 1 "this causes massive slowdown
+let g:rubycomplete_classes_in_global = 1
+let g:rubycomplete_include_object = 1
+let g:rubycomplete_include_objectspace = 1
 
 "rspec
 command! Rspec :call RunNearestSpec()<CR>
-
-"dbext
-" let g:rails_no_dbext = 1
-" let g:dbext_default_profile_hubbub_development = 'type=MYSQL:user=root:dbname=hubbub_development:extra=-t'
-" let g:dbext_default_profile = 'hubbub_development'
 
 "macros
 command! HashTorpedo :%s/ ["':]\(\S*\)["']* => / \1: /g
