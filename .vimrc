@@ -16,10 +16,12 @@ NeoBundle 'terryma/vim-smooth-scroll'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-commentary'
 NeoBundle 'vimtaku/hl_matchit.vim'
+NeoBundle '987poiuytrewq/hl_fold.vim'
 
 "buffers
 NeoBundle 'tpope/vim-eunuch'
 NeoBundle 'moll/vim-bbye'
+NeoBundle 'ntpeters/vim-better-whitespace'
 
 "interface
 NeoBundle 'scrooloose/syntastic'
@@ -49,9 +51,6 @@ NeoBundle 'tpope/vim-endwise'
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'nelstrom/vim-textobj-rubyblock'
 NeoBundle 'thoughtbot/vim-rspec'
-
-"db
-" NeoBundle 'vim-scripts/dbext.vim'
 
 "file types
 NeoBundleLazy 'ekalinin/Dockerfile.vim'
@@ -99,19 +98,15 @@ let g:hl_matchit_hl_groupname = 'Search'
 let g:hl_matchit_cursor_wait = 0.050
 let g:hl_matchit_hl_priority = 1
 
-"saving
-function! StripTrailingWhitespace()
-  let l = line(".")
-  let c = col(".")
-  %s/\s\+$//e
-  call cursor(l, c)
-endfun
+"hl_fold
+let g:hl_fold_enabled = 1
 
+"saving
 set nobackup
 set nowritebackup
 set noswapfile
 autocmd TextChanged,InsertLeave * nested update
-autocmd BufWritePre * :call StripTrailingWhitespace()
+autocmd BufWritePre * StripWhitespace
 
 "indent
 set tabstop=2
@@ -120,7 +115,8 @@ set expandtab
 set autoindent
 set copyindent
 set foldmethod=indent
-set nofoldenable
+set foldenable
+set foldlevelstart=99
 
 "wrap
 set breakindent
