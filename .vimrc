@@ -146,10 +146,11 @@ nnoremap <leader>n :nohlsearch<CR>
 
 "git gutter
 let g:gitgutter_sign_column_always = 1
-let g:gitgutter_sign_added            = '➕'
-let g:gitgutter_sign_modified         = '❙'
-let g:gitgutter_sign_removed          = '▁'
-let g:gitgutter_sign_modified_removed = '❙'
+let g:gitgutter_sign_added              = '➕'
+let g:gitgutter_sign_modified           = '❙'
+let g:gitgutter_sign_removed            = '▁'
+let g:gitgutter_sign_removed_first_line = '─'
+let g:gitgutter_sign_modified_removed   = '❙'
 let g:gitgutter_diff_args = '-b -w --ignore-blank-lines'
 nmap <leader>cs <Plug>GitGutterStageHunk
 nmap <leader>cr <Plug>GitGutterRevertHunk
