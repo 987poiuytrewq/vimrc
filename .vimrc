@@ -90,6 +90,9 @@ colorscheme monokai
 let g:airline_theme = 'dark'
 highlight Normal ctermbg=none
 highlight NonText ctermbg=none
+highlight DiffAdd cterm=none ctermfg=none ctermbg=22
+highlight DiffDelete cterm=none ctermfg=52 ctermbg=52
+highlight DiffText cterm=none ctermfg=none ctermbg=17
 set hlsearch
 
 "hl_matchit
