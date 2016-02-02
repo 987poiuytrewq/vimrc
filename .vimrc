@@ -25,7 +25,7 @@ NeoBundle 'ntpeters/vim-better-whitespace'
 
 "interface
 NeoBundle 'scrooloose/syntastic'
-NeoBundle 'Valloric/YouCompleteMe', {'build':{'unix':'./install.py'}}
+NeoBundle 'Valloric/YouCompleteMe', {'build':{'unix':'./install.py --tern-completer'}}
 NeoBundle 'bling/vim-airline'
 
 "unite
@@ -53,15 +53,13 @@ NeoBundle 'nelstrom/vim-textobj-rubyblock'
 NeoBundle 'thoughtbot/vim-rspec'
 
 "file types
-NeoBundleLazy 'ekalinin/Dockerfile.vim'
-autocmd FileType Dockerfile NeoBundleSource 'ekalinin/Dockerfile.vim'
-NeoBundleLazy 'pangloss/vim-javascript'
-autocmd FileType javascript NeoBundleSource 'pangloss/vim-javascript'
-NeoBundleLazy 'mxw/vim-jsx'
-autocmd FileType javascript NeoBundleSource 'mxw/vim-jsx'
+NeoBundle 'ekalinin/Dockerfile.vim'
+NeoBundle 'pangloss/vim-javascript'
+NeoBundle 'mxw/vim-jsx'
 
 "colors
 NeoBundle 'sickill/vim-monokai'
+NeoBundle 'guns/xterm-color-table.vim'
 
 call neobundle#end()
 filetype plugin indent on
@@ -90,9 +88,10 @@ colorscheme monokai
 let g:airline_theme = 'dark'
 highlight Normal ctermbg=none
 highlight NonText ctermbg=none
-highlight DiffAdd cterm=none ctermfg=none ctermbg=22
+highlight DiffAdd cterm=none ctermfg=none ctermbg=0
 highlight DiffDelete cterm=none ctermfg=52 ctermbg=52
-highlight DiffText cterm=none ctermfg=none ctermbg=17
+highlight DiffText cterm=none ctermfg=none ctermbg=235
+highlight link Pmenu LineNr
 set hlsearch
 
 "hl_matchit
