@@ -17,6 +17,7 @@ NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-commentary'
 NeoBundle 'vimtaku/hl_matchit.vim'
 NeoBundle '987poiuytrewq/hl_fold.vim'
+NeoBundle 'jiangmiao/auto-pairs'
 
 "buffers
 NeoBundle 'tpope/vim-eunuch'
@@ -56,6 +57,7 @@ NeoBundle 'thoughtbot/vim-rspec'
 NeoBundle 'ekalinin/Dockerfile.vim'
 NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'mxw/vim-jsx'
+NeoBundle 'othree/javascript-libraries-syntax.vim'
 
 "colors
 NeoBundle 'sickill/vim-monokai'
@@ -166,7 +168,7 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 1
 let g:syntastic_cursor_columns = 0
 let g:syntastic_quiet_messages = { "level": "warnings", "type": "style" }
-let g:syntastic_javascript_checkers = ['jsxhint']
+let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_css_checkers = ['csslint']
 let g:syntastic_sass_checkers = ['sass']
 
@@ -219,7 +221,9 @@ autocmd FileType unite call s:unite_directory_keybindings()
 "youcompleteme
 let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_seed_identifiers_with_syntax = 1
-"
+let g:ycm_add_preview_to_completeopt = 0
+set completeopt-=preview
+
 "ruby complete
 setlocal omnifunc=syntaxcomplete#Complete
 let g:rubycomplete_rails = 1
@@ -230,6 +234,11 @@ let g:rubycomplete_include_objectspace = 1
 
 "rspec
 command! Rspec :call RunNearestSpec()<CR>
+command! RspecLast :call RunLastSpec()<CR>
+command! RspecFile :call RunCurrentSpecFile()<CR>
+
+"javascript-libraries
+let g:used_javascript_libs = 'underscore,jquery,react'
 
 "macros
 command! HashTorpedo :%s/ ["':]\(\S*\)["']* => / \1: /g
