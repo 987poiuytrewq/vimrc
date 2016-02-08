@@ -11,7 +11,7 @@ NeoBundle 'Shougo/vimproc.vim', {'build':{'unix':'make'}}
 NeoBundle 'szw/vim-tags'
 
 "motion
-NeoBundleLazy 'bkad/CamelCaseMotion'
+NeoBundle 'bkad/CamelCaseMotion'
 NeoBundle 'terryma/vim-smooth-scroll'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-commentary'
@@ -35,6 +35,8 @@ NeoBundleLazy 'Shougo/unite-outline',
       \ {'autoload':{'unite_sources':'outline'}}
 NeoBundleLazy 'Shougo/neomru.vim',
       \ {'autoload':{'unite_sources':['file_mru','directory_mru']}}
+NeoBundleLazy 'Shougo/neoyank.vim',
+      \ {'autoload':{'unite_sources':'history/yank'}}
 NeoBundleLazy 'lambdalisue/unite-grep-vcs',
       \ {'autoload':{'unite_sources':'grep/git'}}
 NeoBundleLazy 'kmnk/vim-unite-giti',
@@ -78,10 +80,7 @@ set ttimeoutlen=0
 let mapleader = "\<Space>"
 
 "camelcasemotion
-map ,w <Plug>CamelCaseMotion_w
-map ,b <Plug>CamelCaseMotion_b
-map ,e <Plug>CamelCaseMotion_e
-NeoBundleSource 'bkad/CamelCaseMotion'
+call camelcasemotion#CreateMotionMappings(',')
 
 "colors
 set t_Co=256
@@ -130,19 +129,23 @@ set breakat-=:
 set breakat-=@
 set showbreak=└─
 
-"buffer / window navigation
+"buffer navigation
 set hidden
 nnoremap <leader>l :bnext<CR>
 nnoremap <leader>h :bprev<CR>
 nnoremap <leader>k :call smooth_scroll#up(&scroll, 10, 5)<CR>
 nnoremap <leader>j :call smooth_scroll#down(&scroll, 10, 5)<CR>
-nnoremap <C-l> :bnext<CR>
-nnoremap <C-h> :bprev<CR>
-nnoremap <C-k> :call smooth_scroll#up(&scroll, 10, 5)<CR>
-nnoremap <C-j> :call smooth_scroll#down(&scroll, 10, 5)<CR>
 nnoremap <leader>q :Bdelete<CR>
 nnoremap <leader>w <C-w>w
 nnoremap <leader>n :nohlsearch<CR>
+
+"window navigation
+nnoremap <C-l> <C-w>l
+nnoremap <C-h> <C-w>h
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+set splitright
+set splitbelow
 
 "git gutter
 let g:gitgutter_sign_column_always = 1
@@ -185,8 +188,6 @@ let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline#extensions#tabline#show_tab_type = 0
 let g:airline#extensions#tabline#left_sep = ''
 let g:airline#extensions#tabline#left_alt_sep = ''
-let g:airline#extensions#tabline#right_sep = ''
-let g:airline#extensions#tabline#right_alt_sep = ''
 set laststatus=2
 
 "unite
