@@ -18,7 +18,8 @@ NeoBundle 'tpope/vim-commentary'
 NeoBundle 'vimtaku/hl_matchit.vim'
 NeoBundle '987poiuytrewq/hl_fold.vim'
 NeoBundle 'jiangmiao/auto-pairs'
-
+NeoBundle 'michaeljsmith/vim-indent-object'
+NeoBundle 'kana/vim-textobj-fold'
 "buffers
 NeoBundle 'tpope/vim-eunuch'
 NeoBundle 'moll/vim-bbye'
@@ -59,6 +60,7 @@ NeoBundle 'thoughtbot/vim-rspec'
 NeoBundle 'ekalinin/Dockerfile.vim'
 NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'mxw/vim-jsx'
+NeoBundle 'othree/yajs.vim'
 NeoBundle 'othree/javascript-libraries-syntax.vim'
 
 "colors
