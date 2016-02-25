@@ -24,6 +24,7 @@ NeoBundle 'kana/vim-textobj-fold'
 NeoBundle 'tpope/vim-eunuch'
 NeoBundle 'moll/vim-bbye'
 NeoBundle 'ntpeters/vim-better-whitespace'
+NeoBundle 'majutsushi/tagbar'
 
 "interface
 NeoBundle 'scrooloose/syntastic'
@@ -40,10 +41,9 @@ NeoBundleLazy 'Shougo/neoyank.vim',
       \ {'autoload':{'unite_sources':'history/yank'}}
 NeoBundleLazy 'lambdalisue/unite-grep-vcs',
       \ {'autoload':{'unite_sources':'grep/git'}}
-NeoBundleLazy 'kmnk/vim-unite-giti',
-      \ {'autoload':{'unite_sources':'giti'}}
 NeoBundleLazy 'osyo-manga/unite-quickfix',
       \ {'autoload':{'unite_sources':['quickfix', 'location_list']}}
+NeoBundle 'tsukkee/unite-tag'
 
 "git
 NeoBundle 'tpope/vim-fugitive'
@@ -172,7 +172,7 @@ let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 1
 let g:syntastic_cursor_columns = 0
-let g:syntastic_quiet_messages = { "level": "warnings", "type": "style" }
+" let g:syntastic_quiet_messages = { "level": "warnings", "type": "style" }
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_css_checkers = ['csslint']
 let g:syntastic_sass_checkers = ['sass']
@@ -207,6 +207,7 @@ nnoremap <leader>r :<C-u>Unite -no-split -smartcase -buffer-name=recent -start-i
 nnoremap <leader>o :<C-u>Unite -no-split -smartcase -start-insert -buffer-name=outline outline<CR>
 nnoremap <leader>y :<C-u>Unite -no-split -smartcase -buffer-name=yank history/yank<CR>
 nnoremap <leader>b :<C-u>Unite -no-split -smartcase -buffer-name=buffers buffer<CR>
+nnoremap <leader>t :<C-u>Unite -no-split -smartcase -buffer-name=tags tag:%<CR>
 nnoremap <leader>cc :<C-u>Unite -no-split -smartcase -buffer-name=quickfix quickfix<CR>
 nnoremap <leader>cl :<C-u>Unite -no-split -smartcase -buffer-name=locations location_list<CR>
 nnoremap <leader>gg :<C-u>Unite -no-split -smartcase -buffer-name=grep grep/git<CR>
