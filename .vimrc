@@ -148,6 +148,8 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 set splitright
 set splitbelow
+"close preview window
+nnoremap <C-p> :cp<CR>
 
 "git gutter
 let g:gitgutter_sign_column_always = 1
