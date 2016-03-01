@@ -169,12 +169,17 @@ let g:vim_tags_auto_generate = 1
 "syntastic
 highlight link SyntasticErrorSign GitGutterDelete
 let g:syntastic_error_symbol = '✖'
+highlight link SyntasticWarningSign GitGutterChange
+let g:syntastic_warning_symbol = '✖'
+highlight link SyntasticStyleErrorSign GitGutterDelete
+let g:syntastic_style_error_symbol = '❓'
+highlight link SyntasticStyleWarningSign GitGutterChange
+let g:syntastic_style_warning_symbol = '❓'
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 1
 let g:syntastic_cursor_columns = 0
-" let g:syntastic_quiet_messages = { "level": "warnings", "type": "style" }
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_css_checkers = ['csslint']
 let g:syntastic_sass_checkers = ['sass']
