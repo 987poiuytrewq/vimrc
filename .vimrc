@@ -1,75 +1,66 @@
-"neobundle
-set nocompatible
-set runtimepath+=~/.vim/bundle/neobundle.vim/
-call neobundle#begin(expand('~/.vim/bundle/'))
-NeoBundleFetch 'Shougo/neobundle.vim'
+call plug#begin('~/.vim/plugged')
 
 "util
-NeoBundle 'tpope/vim-sensible'
-NeoBundle 'tpope/vim-dispatch'
-NeoBundle 'Shougo/vimproc.vim', {'build':{'unix':'make'}}
-NeoBundle 'szw/vim-tags'
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-dispatch'
+Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+Plug 'szw/vim-tags'
 
 "motion
-NeoBundle 'bkad/CamelCaseMotion'
-NeoBundle 'terryma/vim-smooth-scroll'
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'tpope/vim-commentary'
-NeoBundle 'vimtaku/hl_matchit.vim'
-NeoBundle '987poiuytrewq/hl_fold.vim'
-NeoBundle 'jiangmiao/auto-pairs'
-NeoBundle 'michaeljsmith/vim-indent-object'
-NeoBundle 'kana/vim-textobj-fold'
+Plug 'bkad/CamelCaseMotion'
+Plug 'terryma/vim-smooth-scroll'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+Plug 'vimtaku/hl_matchit.vim'
+Plug '987poiuytrewq/hl_fold.vim'
+Plug 'jiangmiao/auto-pairs'
+Plug 'michaeljsmith/vim-indent-object'
+Plug 'kana/vim-textobj-fold'
+Plug 'junegunn/vim-easy-align'
+
 "buffers
-NeoBundle 'tpope/vim-eunuch'
-NeoBundle 'moll/vim-bbye'
-NeoBundle 'ntpeters/vim-better-whitespace'
-NeoBundle 'majutsushi/tagbar'
+Plug 'tpope/vim-eunuch'
+Plug 'moll/vim-bbye'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'majutsushi/tagbar'
 
 "interface
-NeoBundle 'scrooloose/syntastic'
-NeoBundle 'Valloric/YouCompleteMe', {'build':{'unix':'./install.py --tern-completer'}}
-NeoBundle 'bling/vim-airline'
+Plug 'scrooloose/syntastic'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
+Plug 'bling/vim-airline'
 
 "unite
-NeoBundle 'Shougo/unite.vim'
-NeoBundleLazy 'Shougo/unite-outline',
-      \ {'autoload':{'unite_sources':'outline'}}
-NeoBundleLazy 'Shougo/neomru.vim',
-      \ {'autoload':{'unite_sources':['file_mru','directory_mru']}}
-NeoBundleLazy 'Shougo/neoyank.vim',
-      \ {'autoload':{'unite_sources':'history/yank'}}
-NeoBundleLazy 'lambdalisue/unite-grep-vcs',
-      \ {'autoload':{'unite_sources':'grep/git'}}
-NeoBundleLazy 'osyo-manga/unite-quickfix',
-      \ {'autoload':{'unite_sources':['quickfix', 'location_list']}}
-NeoBundle 'tsukkee/unite-tag'
+Plug 'Shougo/unite.vim'
+Plug 'Shougo/unite-outline'
+Plug 'Shougo/neomru.vim'
+Plug 'Shougo/neoyank.vim'
+Plug 'lambdalisue/unite-grep-vcs'
+Plug 'osyo-manga/unite-quickfix'
+Plug 'tsukkee/unite-tag'
 
 "git
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 
 "ruby
-NeoBundle 'tpope/vim-rails'
-NeoBundle 'tpope/vim-endwise'
-NeoBundle 'kana/vim-textobj-user'
-NeoBundle 'nelstrom/vim-textobj-rubyblock'
-NeoBundle 'thoughtbot/vim-rspec'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-endwise'
+Plug 'kana/vim-textobj-user'
+Plug 'nelstrom/vim-textobj-rubyblock'
+Plug 'thoughtbot/vim-rspec'
 
 "file types
-NeoBundle 'ekalinin/Dockerfile.vim'
-NeoBundle 'pangloss/vim-javascript'
-NeoBundle 'mxw/vim-jsx'
-NeoBundle 'othree/yajs.vim'
-NeoBundle 'othree/javascript-libraries-syntax.vim'
+Plug 'ekalinin/Dockerfile.vim'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'othree/yajs.vim'
+Plug 'othree/javascript-libraries-syntax.vim'
 
 "colors
-NeoBundle 'sickill/vim-monokai'
-NeoBundle 'guns/xterm-color-table.vim'
+Plug 'sickill/vim-monokai'
+Plug 'guns/xterm-color-table.vim'
 
-call neobundle#end()
-filetype plugin indent on
-NeoBundleCheck
+call plug#end()
 
 "general
 set number
@@ -142,8 +133,8 @@ nnoremap <leader>w <C-w>w
 nnoremap <leader>n :nohlsearch<CR>
 
 "window navigation
-nnoremap <C-l> <C-w>l
 nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 set splitright
@@ -152,7 +143,7 @@ set splitbelow
 nnoremap <C-p> :cp<CR>
 
 "git gutter
-let g:gitgutter_sign_column_always = 1
+let g:gitgutter_sign_column_always      = 1
 let g:gitgutter_sign_added              = '➕'
 let g:gitgutter_sign_modified           = '❙'
 let g:gitgutter_sign_removed            = '▁'
@@ -219,9 +210,6 @@ nnoremap <leader>cc :<C-u>Unite -no-split -smartcase -buffer-name=quickfix quick
 nnoremap <leader>cl :<C-u>Unite -no-split -smartcase -buffer-name=locations location_list<CR>
 nnoremap <leader>gg :<C-u>Unite -no-split -smartcase -buffer-name=grep grep/git<CR>
 nnoremap <leader>gp :<C-u>UniteResume grep<CR>
-nnoremap <leader>gb :<C-u>Unite -no-split -buffer-name=gitbranches giti/branch_all<CR>
-nnoremap <leader>gs :<C-u>Unite -no-split -buffer-name=gitstatus giti/status<CR>
-nnoremap <leader>gl :<C-u>Unite -no-split -buffer-name=gitlog giti/log<CR>
 
 "unite customisation
 function! s:unite_directory_keybindings()
