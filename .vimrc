@@ -13,16 +13,13 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'vimtaku/hl_matchit.vim'
 Plug '987poiuytrewq/hl_fold.vim'
-Plug 'jiangmiao/auto-pairs'
-Plug 'michaeljsmith/vim-indent-object'
-Plug 'kana/vim-textobj-fold'
+Plug 'Raimondi/delimitMate'
 Plug 'junegunn/vim-easy-align'
 
 "buffers
 Plug 'tpope/vim-eunuch'
 Plug 'moll/vim-bbye'
 Plug 'ntpeters/vim-better-whitespace'
-Plug 'majutsushi/tagbar'
 
 "interface
 Plug 'scrooloose/syntastic'
@@ -43,17 +40,14 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
 "ruby
-Plug 'tpope/vim-rails'
-Plug 'tpope/vim-endwise'
-Plug 'kana/vim-textobj-user'
-Plug 'nelstrom/vim-textobj-rubyblock'
-Plug 'thoughtbot/vim-rspec'
+Plug 'tpope/vim-rails', { 'for': 'ruby,eruby' }
+Plug 'tpope/vim-endwise', { 'for': 'ruby,eruby' }
+Plug 'kana/vim-textobj-user', { 'for': 'ruby,eruby' }
+Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby,eruby' }
+Plug 'thoughtbot/vim-rspec', { 'for': 'ruby,eruby' }
 
 "file types
-Plug 'ekalinin/Dockerfile.vim'
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
-Plug 'othree/yajs.vim'
+Plug 'sheerun/vim-polyglot'
 Plug 'othree/javascript-libraries-syntax.vim'
 
 "colors
@@ -238,6 +232,9 @@ command! RspecFile :call RunCurrentSpecFile()<CR>
 
 "javascript-libraries
 let g:used_javascript_libs = 'underscore,jquery,react'
+
+"auto-pairs
+let g:AutoPairsMultilineClose = 0
 
 "macros
 command! HashTorpedo :%s/ ["':]\(\S*\)["']* => / \1: /g
