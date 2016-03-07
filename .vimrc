@@ -135,6 +135,8 @@ set splitright
 set splitbelow
 "close preview window
 nnoremap <C-p> :cp<CR>
+"quickfix and help on vertical left
+autocmd BufWinEnter quickfix,help wincmd L
 
 "git gutter
 let g:gitgutter_sign_column_always      = 1
