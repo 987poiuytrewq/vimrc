@@ -52,6 +52,7 @@ Plug 'othree/javascript-libraries-syntax.vim'
 
 "colors
 Plug 'sickill/vim-monokai'
+Plug 'freeo/vim-kalisi'
 Plug 'guns/xterm-color-table.vim'
 
 call plug#end()
@@ -76,9 +77,9 @@ colorscheme monokai
 let g:airline_theme = 'dark'
 highlight Normal ctermbg=none
 highlight NonText ctermbg=none
-highlight DiffAdd cterm=none ctermfg=none ctermbg=0
+highlight DiffAdd cterm=none ctermfg=none ctermbg=22
 highlight DiffDelete cterm=none ctermfg=52 ctermbg=52
-highlight DiffText cterm=none ctermfg=none ctermbg=235
+highlight DiffText cterm=none ctermfg=none ctermbg=17
 highlight link Pmenu LineNr
 set hlsearch
 
@@ -134,7 +135,7 @@ nnoremap <C-l> <C-w>l
 set splitright
 set splitbelow
 "close preview window
-nnoremap <C-p> :cp<CR>
+nnoremap <C-c> :cp<CR>
 "quickfix and help on vertical left
 autocmd BufWinEnter quickfix,help wincmd L
 
@@ -235,8 +236,10 @@ command! RspecFile :call RunCurrentSpecFile()<CR>
 "javascript-libraries
 let g:used_javascript_libs = 'underscore,jquery,react'
 
-"auto-pairs
-let g:AutoPairsMultilineClose = 0
-
 "macros
 command! HashTorpedo :%s/ ["':]\(\S*\)["']* => / \1: /g
+
+"neovim
+if exists(':tnoremap')
+  tnoremap <Esc> <C-\><C-n>
+endif
