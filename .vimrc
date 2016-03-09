@@ -44,11 +44,14 @@ Plug 'tpope/vim-rails', { 'for': 'ruby,eruby' }
 Plug 'tpope/vim-endwise', { 'for': 'ruby,eruby' }
 Plug 'kana/vim-textobj-user', { 'for': 'ruby,eruby' }
 Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby,eruby' }
-Plug 'thoughtbot/vim-rspec', { 'for': 'ruby,eruby' }
 
 "file types
 Plug 'sheerun/vim-polyglot'
 Plug 'othree/javascript-libraries-syntax.vim'
+
+"test
+Plug 'kassio/neoterm'
+Plug 'thoughtbot/vim-rspec', { 'for': 'ruby,eruby' }
 
 "colors
 Plug 'sickill/vim-monokai'
@@ -136,8 +139,6 @@ set splitright
 set splitbelow
 "close preview window
 nnoremap <C-c> :cp<CR>
-"quickfix and help on vertical left
-autocmd BufWinEnter quickfix,help wincmd L
 
 "git gutter
 let g:gitgutter_sign_column_always      = 1
@@ -242,4 +243,17 @@ command! HashTorpedo :%s/ ["':]\(\S*\)["']* => / \1: /g
 "neovim
 if exists(':tnoremap')
   tnoremap <Esc> <C-\><C-n>
+  tnoremap <C-h> <C-\><C-n><C-w>h
+  tnoremap <C-j> <C-\><C-n><C-w>j
+  tnoremap <C-k> <C-\><C-n><C-w>k
+  tnoremap <C-l> <C-\><C-n><C-w>l
+endif
+
+if has('nvim')
+  let g:neoterm_position = 'vertical'
+  let test#strategy = 'neoterm'
+  command! Test :call neoterm#test#run('current')<CR>
+  command! TestFile :call neoterm#test#run('file')<CR>
+  command! TestAll :call neoterm#test#run('all')<CR>
+  command! TestLast :call neoterm#test#rerun()<CR>
 endif
