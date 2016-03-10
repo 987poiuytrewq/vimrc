@@ -22,7 +22,7 @@ Plug 'moll/vim-bbye'
 Plug 'ntpeters/vim-better-whitespace'
 
 "interface
-Plug 'scrooloose/syntastic'
+Plug 'benekastah/neomake'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
 Plug 'bling/vim-airline'
 
@@ -78,17 +78,19 @@ set t_Co=256
 set background=dark
 colorscheme monokai
 let g:airline_theme = 'dark'
-highlight Normal ctermbg=none
-highlight NonText ctermbg=none
-highlight DiffAdd cterm=none ctermfg=none ctermbg=22
-highlight DiffDelete cterm=none ctermfg=52 ctermbg=52
-highlight DiffText cterm=none ctermfg=none ctermbg=17
-highlight link Pmenu LineNr
+highlight! Normal ctermbg=none
+highlight! NonText ctermbg=none
+highlight! DiffAdd cterm=none ctermfg=none ctermbg=22
+highlight! DiffDelete cterm=none ctermfg=52 ctermbg=52
+highlight! DiffText cterm=none ctermfg=none ctermbg=17
+highlight! link Search IncSearch
+highlight! link Pmenu LineNr
+highlight! SpellCap cterm=none ctermfg=235 ctermbg=3
 set hlsearch
 
 "hl_matchit
 let g:hl_matchit_enable_on_vim_startup = 1
-let g:hl_matchit_hl_groupname = 'Search'
+let g:hl_matchit_hl_groupname = 'MatchParen'
 let g:hl_matchit_cursor_wait = 0.050
 let g:hl_matchit_hl_priority = 1
 
@@ -142,11 +144,11 @@ nnoremap <C-c> :cp<CR>
 
 "git gutter
 let g:gitgutter_sign_column_always      = 1
-let g:gitgutter_sign_added              = '➕'
-let g:gitgutter_sign_modified           = '❙'
-let g:gitgutter_sign_removed            = '▁'
-let g:gitgutter_sign_removed_first_line = '─'
-let g:gitgutter_sign_modified_removed   = '❙'
+let g:gitgutter_sign_added              = '┃'
+let g:gitgutter_sign_modified           = '┃'
+let g:gitgutter_sign_removed            = '┃'
+let g:gitgutter_sign_removed_first_line = '┃'
+let g:gitgutter_sign_modified_removed   = '┃'
 let g:gitgutter_diff_args = '-b -w --ignore-blank-lines'
 nmap <leader>cs <Plug>GitGutterStageHunk
 nmap <leader>cr <Plug>GitGutterRevertHunk
@@ -155,23 +157,17 @@ nmap <leader>cp <Plug>GitGutterPreviewHunk
 "vim-tags
 let g:vim_tags_auto_generate = 1
 
-"syntastic
-highlight link SyntasticErrorSign GitGutterDelete
-let g:syntastic_error_symbol = '✖'
-highlight link SyntasticWarningSign GitGutterChange
-let g:syntastic_warning_symbol = '✖'
-highlight link SyntasticStyleErrorSign GitGutterDelete
-let g:syntastic_style_error_symbol = '❓'
-highlight link SyntasticStyleWarningSign GitGutterChange
-let g:syntastic_style_warning_symbol = '❓'
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 1
-let g:syntastic_cursor_columns = 0
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_css_checkers = ['csslint']
-let g:syntastic_sass_checkers = ['sass']
+"neomakel
+autocmd! BufReadPost * Neomake
+autocmd! BufWritePost * Neomake
+let g:neomake_error_sign = {
+      \ 'text': '✖',
+      \ 'texthl': 'GitGutterDelete',
+      \ }
+let g:neomake_warning_sign = {
+      \ 'text': '✖',
+      \ 'texthl': 'GitGutterChange',
+      \ }
 
 "airline
 let g:airline_extensions = ['tabline', 'branch', 'unite', 'syntastic']
