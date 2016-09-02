@@ -1,3 +1,7 @@
+let has_ycm = v:version > 703 || v:version == 703 && has('patch598')
+let has_breakindent = v:version > 704 || v:version == 704 && has('patch338')
+let has_textchanged = v:version > 704 || v:version == 704 && has('patch126')
+
 call plug#begin('~/.vim/plugged')
 
 "util
@@ -5,6 +9,7 @@ Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-dispatch'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 Plug 'szw/vim-tags'
+Plug 'editorconfig/editorconfig-vim'
 
 "motion
 Plug 'bkad/CamelCaseMotion'
@@ -20,14 +25,19 @@ Plug 'junegunn/vim-easy-align'
 Plug 'tpope/vim-eunuch'
 Plug 'moll/vim-bbye'
 Plug 'ntpeters/vim-better-whitespace'
+Plug 'justinmk/vim-dirvish'
 
 "interface
 Plug 'benekastah/neomake'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
-Plug 'bling/vim-airline'
+if has_ycm
+  Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
+endif
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 "unite
 Plug 'Shougo/unite.vim'
+Plug 'Shougo/vimfiler.vim'
 Plug 'Shougo/unite-outline'
 Plug 'Shougo/neomru.vim'
 Plug 'Shougo/neoyank.vim'
@@ -48,6 +58,7 @@ Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby,eruby' }
 "file types
 Plug 'sheerun/vim-polyglot'
 Plug 'othree/javascript-libraries-syntax.vim'
+Plug 'hashivim/vim-terraform'
 
 "test
 Plug 'kassio/neoterm'
@@ -55,7 +66,8 @@ Plug 'thoughtbot/vim-rspec', { 'for': 'ruby,eruby' }
 
 "colors
 Plug 'sickill/vim-monokai'
-Plug 'freeo/vim-kalisi'
+Plug 'qualiabyte/vim-colorstepper'
+Plug 'flazz/vim-colorschemes'
 Plug 'guns/xterm-color-table.vim'
 
 call plug#end()
@@ -72,12 +84,13 @@ let mapleader = "\<Space>"
 
 "camelcasemotion
 call camelcasemotion#CreateMotionMappings(',')
+set selection=exclusive
 
 "colors
 set t_Co=256
 set background=dark
 colorscheme monokai
-let g:airline_theme = 'dark'
+let g:airline_theme = 'lucius'
 highlight! Normal ctermbg=none
 highlight! NonText ctermbg=none
 highlight! DiffAdd cterm=none ctermfg=none ctermbg=22
@@ -96,12 +109,20 @@ let g:hl_matchit_hl_priority = 1
 
 "hl_fold
 let g:hl_fold_enabled = 1
+let g:hl_fold_start_text = ''
+let g:hl_fold_mid_text = ''
+let g:hl_fold_end_text = ''
+highlight HlFoldEdge ctermbg=235
+let g:hl_fold_start_linehl = 'HlFoldEdge'
+let g:hl_fold_end_linehl = 'HlFoldEdge'
 
-"saving
 set nobackup
 set nowritebackup
 set noswapfile
-autocmd TextChanged,InsertLeave * nested update
+autocmd InsertLeave * nested update
+if has_textchanged
+  autocmd TextChanged * nested update
+endif
 autocmd BufWritePre * StripWhitespace
 
 "indent
@@ -115,7 +136,9 @@ set foldenable
 set foldlevelstart=99
 
 "wrap
-set breakindent
+if has_breakindent
+  set breakindent
+endif
 set linebreak
 " don't break on ruby sigils
 set breakat-=:
@@ -141,6 +164,8 @@ set splitright
 set splitbelow
 "close preview window
 nnoremap <C-c> :cp<CR>
+"paste in insert mode
+inoremap <C-p> <C-r>"
 
 "git gutter
 let g:gitgutter_sign_column_always      = 1
@@ -150,6 +175,8 @@ let g:gitgutter_sign_removed            = '┃'
 let g:gitgutter_sign_removed_first_line = '┃'
 let g:gitgutter_sign_modified_removed   = '┃'
 let g:gitgutter_diff_args = '-b -w --ignore-blank-lines'
+nmap <leader>cu <Plug>GitGutterUndoHunk
+nmap <leader>cu <Plug>GitGutterUndoHunk
 nmap <leader>cs <Plug>GitGutterStageHunk
 nmap <leader>cr <Plug>GitGutterRevertHunk
 nmap <leader>cp <Plug>GitGutterPreviewHunk
@@ -157,24 +184,24 @@ nmap <leader>cp <Plug>GitGutterPreviewHunk
 "vim-tags
 let g:vim_tags_auto_generate = 1
 
-"neomakel
+"neomake
 autocmd! BufReadPost * Neomake
 autocmd! BufWritePost * Neomake
 let g:neomake_error_sign = {
-      \ 'text': '✖',
+      \ 'text': '•',
       \ 'texthl': 'GitGutterDelete',
       \ }
 let g:neomake_warning_sign = {
-      \ 'text': '✖',
+      \ 'text': '•',
       \ 'texthl': 'GitGutterChange',
       \ }
 
 "airline
-let g:airline_extensions = ['tabline', 'branch', 'unite', 'syntastic']
+let g:airline_extensions = ['tabline', 'branch', 'unite']
 let g:airline_powerline_fonts=1
 let g:airline_section_x = ''
 let g:airline_section_y = ''
-let g:airline_section_z = ''
+let g:airline_section_z = '%{strftime("%H:%M")}'
 let g:airline_left_sep = ''
 let g:airline_right_sep = ''
 let g:airline#extensions#tabline#enabled = 1
@@ -193,6 +220,7 @@ call unite#custom#source('file', 'converters', ['converter_tail_abbr'])
 call unite#custom#source('file', 'matchers', ['matcher_default'])
 call unite#custom#source('file_rec,file_rec/git', 'converters', ['converter_relative_abbr'])
 nnoremap <leader># :<C-u>Unite -no-split -smartcase -buffer-name=directories -start-insert -hide-source-names file file/new directory/new<CR>
+nnoremap <leader>` :<C-u>Unite -no-split -smartcase -buffer-name=directories -start-insert -hide-source-names file file/new directory/new<CR>
 nnoremap <leader>d :<C-u>UniteWithBufferDir -no-split -smartcase -buffer-name=directories -start-insert -hide-source-names file file/new directory/new<CR>
 nnoremap <leader>f :<C-u>Unite -no-split -smartcase -buffer-name=files -start-insert file_rec/git:--cached:--others:--exclude-standard<CR>
 nnoremap <leader>r :<C-u>Unite -no-split -smartcase -buffer-name=recent -start-insert file_mru<CR>
@@ -210,12 +238,25 @@ function! s:unite_directory_keybindings()
   imap <buffer> <C-h> <Plug>(unite_delete_backward_path)
 endfunction
 autocmd FileType unite call s:unite_directory_keybindings()
+autocmd FileType unite setlocal number
 
-"youcompleteme
-let g:ycm_collect_identifiers_from_tags_files = 1
-let g:ycm_seed_identifiers_with_syntax = 1
-let g:ycm_add_preview_to_completeopt = 0
-set completeopt-=preview
+"vimfiler
+let g:vimfiler_as_default_explorer = 1
+let g:vimfiler_expand_jump_to_first_child = 0
+let g:vimfiler_tree_leaf_icon = ''
+let g:vimfiler_tree_opened_icon = '▼'
+let g:vimfiler_tree_closed_icon = '▶'
+let g:vimfiler_tree_readonly_icon = ''
+autocmd FileType vimfiler nmap <buffer> <2-LeftMouse> <Plug>(vimfiler_cd_or_edit)
+autocmd FileType vimfiler nmap <buffer> <LeftMouse> <LeftMouse><Plug>(vimfiler_expand_or_edit)
+
+if has_ycm
+  "youcompleteme
+  let g:ycm_collect_identifiers_from_tags_files = 1
+  let g:ycm_seed_identifiers_with_syntax = 1
+  let g:ycm_add_preview_to_completeopt = 0
+  set completeopt-=preview
+endif
 
 "ruby complete
 setlocal omnifunc=syntaxcomplete#Complete
