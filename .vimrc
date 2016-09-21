@@ -59,6 +59,7 @@ Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby,eruby' }
 Plug 'sheerun/vim-polyglot'
 Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'hashivim/vim-terraform'
+Plug 'jamessan/vim-gnupg'
 
 "test
 Plug 'kassio/neoterm'
@@ -66,7 +67,6 @@ Plug 'thoughtbot/vim-rspec', { 'for': 'ruby,eruby' }
 
 "colors
 Plug 'sickill/vim-monokai'
-Plug 'qualiabyte/vim-colorstepper'
 Plug 'flazz/vim-colorschemes'
 Plug 'guns/xterm-color-table.vim'
 
@@ -119,7 +119,6 @@ let g:hl_fold_end_linehl = 'HlFoldEdge'
 set nobackup
 set nowritebackup
 set noswapfile
-autocmd InsertLeave * nested update
 if has_textchanged
   autocmd TextChanged * nested update
 endif
@@ -175,7 +174,6 @@ let g:gitgutter_sign_removed            = '┃'
 let g:gitgutter_sign_removed_first_line = '┃'
 let g:gitgutter_sign_modified_removed   = '┃'
 let g:gitgutter_diff_args = '-b -w --ignore-blank-lines'
-nmap <leader>cu <Plug>GitGutterUndoHunk
 nmap <leader>cu <Plug>GitGutterUndoHunk
 nmap <leader>cs <Plug>GitGutterStageHunk
 nmap <leader>cr <Plug>GitGutterRevertHunk
