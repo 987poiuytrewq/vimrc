@@ -67,6 +67,8 @@ Plug 'thoughtbot/vim-rspec', { 'for': 'ruby,eruby' }
 
 "colors
 Plug 'sickill/vim-monokai'
+Plug 'gosukiwi/vim-atom-dark'
+Plug 'joshdick/onedark.vim'
 Plug 'flazz/vim-colorschemes'
 Plug 'guns/xterm-color-table.vim'
 
@@ -89,7 +91,7 @@ set selection=exclusive
 "colors
 set t_Co=256
 set background=dark
-colorscheme monokai
+colorscheme onedark
 let g:airline_theme = 'lucius'
 highlight! Normal ctermbg=none
 highlight! NonText ctermbg=none
@@ -100,6 +102,8 @@ highlight! link Search IncSearch
 highlight! link Pmenu LineNr
 highlight! SpellCap cterm=none ctermfg=235 ctermbg=3
 set hlsearch
+set fillchars=vert:│,fold:-
+" highlight NonText ctermfg=234 ctermbg=234
 
 "hl_matchit
 let g:hl_matchit_enable_on_vim_startup = 1
@@ -112,9 +116,8 @@ let g:hl_fold_enabled = 1
 let g:hl_fold_start_text = ''
 let g:hl_fold_mid_text = ''
 let g:hl_fold_end_text = ''
-highlight HlFoldEdge ctermbg=235
-let g:hl_fold_start_linehl = 'HlFoldEdge'
-let g:hl_fold_end_linehl = 'HlFoldEdge'
+let g:hl_fold_start_linehl = 'Folded'
+let g:hl_fold_end_linehl = 'Folded'
 
 set nobackup
 set nowritebackup
@@ -176,7 +179,7 @@ let g:gitgutter_sign_modified_removed   = '┃'
 let g:gitgutter_diff_args = '-b -w --ignore-blank-lines'
 nmap <leader>cu <Plug>GitGutterUndoHunk
 nmap <leader>cs <Plug>GitGutterStageHunk
-nmap <leader>cr <Plug>GitGutterRevertHunk
+nmap <leader>cr <Plug>GitGutterUndoHunk
 nmap <leader>cp <Plug>GitGutterPreviewHunk
 
 "vim-tags
