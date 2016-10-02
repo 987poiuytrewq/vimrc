@@ -99,11 +99,12 @@ highlight! DiffAdd cterm=none ctermfg=none ctermbg=22
 highlight! DiffDelete cterm=none ctermfg=52 ctermbg=52
 highlight! DiffText cterm=none ctermfg=none ctermbg=17
 highlight! link Search IncSearch
-highlight! link Pmenu LineNr
+highlight! link Pmenu StatusLineNC
 highlight! SpellCap cterm=none ctermfg=235 ctermbg=3
 set hlsearch
-set fillchars=vert:│,fold:-
-" highlight NonText ctermfg=234 ctermbg=234
+set fillchars=vert:\ ,fold:\ ,
+highlight! StatusLineNC ctermbg=235
+highlight! VertSplit ctermbg=235
 
 "hl_matchit
 let g:hl_matchit_enable_on_vim_startup = 1
@@ -112,12 +113,12 @@ let g:hl_matchit_cursor_wait = 0.050
 let g:hl_matchit_hl_priority = 1
 
 "hl_fold
-let g:hl_fold_enabled = 1
+let g:hl_fold_enabled = 0
 let g:hl_fold_start_text = ''
 let g:hl_fold_mid_text = ''
 let g:hl_fold_end_text = ''
-let g:hl_fold_start_linehl = 'Folded'
-let g:hl_fold_end_linehl = 'Folded'
+let g:hl_fold_start_linehl = 'MatchParen'
+let g:hl_fold_end_linehl = 'MatchParen'
 
 set nobackup
 set nowritebackup
@@ -133,9 +134,15 @@ set shiftwidth=2
 set expandtab
 set autoindent
 set copyindent
+
+"fold
 set foldmethod=indent
 set foldenable
 set foldlevelstart=99
+function! FoldText()
+  return '▶' . strpart(getline(v:foldstart), 1)
+endfunction
+set foldtext=FoldText()
 
 "wrap
 if has_breakindent
