@@ -281,7 +281,7 @@ command! RspecLast :call RunLastSpec()<CR>
 command! RspecFile :call RunCurrentSpecFile()<CR>
 
 "javascript-libraries
-let g:used_javascript_libs = 'underscore,jquery,react'
+let g:used_javascript_libs = 'underscore,jquery,react,angularjs'
 
 "macros
 command! HashTorpedo :%s/ ["':]\(\S*\)["']* => / \1: /g
