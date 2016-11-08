@@ -1,6 +1,6 @@
-let has_ycm = v:version > 703 || v:version == 703 && has('patch598')
-let has_breakindent = v:version > 704 || v:version == 704 && has('patch338')
-let has_textchanged = v:version > 704 || v:version == 704 && has('patch126')
+let has_ycm = v:version >= 703 || (v:version == 703 && has('patch598'))
+let has_breakindent = v:version > 704 || (v:version == 704 && has('patch338'))
+let has_textchanged = v:version > 704 || (v:version == 704 && has('patch126'))
 
 call plug#begin('~/.vim/plugged')
 
@@ -84,6 +84,10 @@ set ttimeoutlen=0
 "leader
 let mapleader = "\<Space>"
 
+"motion overrides
+noremap H ^
+noremap L $
+
 "camelcasemotion
 call camelcasemotion#CreateMotionMappings(',')
 set selection=exclusive
@@ -117,8 +121,8 @@ let g:hl_fold_enabled = 0
 let g:hl_fold_start_text = ''
 let g:hl_fold_mid_text = ''
 let g:hl_fold_end_text = ''
-let g:hl_fold_start_linehl = 'MatchParen'
-let g:hl_fold_end_linehl = 'MatchParen'
+let g:hl_fold_start_linehl = 'Folded'
+let g:hl_fold_end_linehl = 'Folded'
 
 set nobackup
 set nowritebackup
@@ -137,11 +141,13 @@ set smartindent
 set copyindent
 
 "fold
-set foldmethod=indent
+highlight! Folded ctermfg=none ctermbg=235
+set foldmethod=syntax
 set foldenable
 set foldlevelstart=99
 function! FoldText()
-  return '▶' . strpart(getline(v:foldstart), 1)
+  return substitute(getline(v:foldstart), '^.', '▶', '') . ' ... ' .
+        \ substitute(getline(v:foldend), '^\s*', '', '')
 endfunction
 set foldtext=FoldText()
 
