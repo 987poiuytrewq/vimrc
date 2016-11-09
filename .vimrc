@@ -87,6 +87,8 @@ let mapleader = "\<Space>"
 "motion overrides
 noremap H ^
 noremap L $
+inoremap jk <ESC>
+inoremap kj <ESC>
 
 "camelcasemotion
 call camelcasemotion#CreateMotionMappings(',')
@@ -121,8 +123,8 @@ let g:hl_fold_enabled = 0
 let g:hl_fold_start_text = ''
 let g:hl_fold_mid_text = ''
 let g:hl_fold_end_text = ''
-let g:hl_fold_start_linehl = 'Folded'
-let g:hl_fold_end_linehl = 'Folded'
+let g:hl_fold_start_linehl = 'MatchParen'
+let g:hl_fold_end_linehl = 'MatchParen'
 
 set nobackup
 set nowritebackup
