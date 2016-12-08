@@ -25,7 +25,6 @@ Plug 'junegunn/vim-easy-align'
 Plug 'tpope/vim-eunuch'
 Plug 'moll/vim-bbye'
 Plug 'ntpeters/vim-better-whitespace'
-Plug 'justinmk/vim-dirvish'
 
 "interface
 Plug 'benekastah/neomake'
@@ -48,6 +47,7 @@ Plug 'tsukkee/unite-tag'
 "git
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+Plug '987poiuytrewq/ungite.vim'
 
 "ruby
 Plug 'tpope/vim-rails', { 'for': 'ruby,eruby' }
@@ -141,6 +141,7 @@ set expandtab
 set autoindent
 set smartindent
 set copyindent
+set list lcs=nbsp:━,tab:━━
 
 "fold
 highlight! Folded ctermfg=none ctermbg=235
